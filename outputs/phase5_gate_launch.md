@@ -1,6 +1,6 @@
 # Phase 5 (Launch): gate: launch
 
-Run `20261117-200539-79c8` | generated 2026-11-17T20:23:06Z | model `qwen3:4b`
+Run `20261117-171828-7aa9` | generated 2026-11-17T17:35:29Z | model `qwen3:4b`
 
 **Recommendation: GO**
 
@@ -24,5 +24,5 @@ Next step: Store can open once the founder approves.
 
 ## Run cost so far
 
-- Model calls: 22, tokens: 18,680 (13,809 in / 4,871 out), model time: 1046s
+- Model calls: 21, tokens: 17,992 (13,345 in / 4,647 out), model time: 1008s
 - Cost: **$0.0000** (local open-weight model `qwen3:4b`)

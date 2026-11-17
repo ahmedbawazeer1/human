@@ -12,7 +12,7 @@ The final pitch gives a team an unseen founder brief and three minutes. A full s
 ## During the three minutes
 
 1. Paste the brief into the form, set **Run until phase** to `1`, click **Start run**.
-2. While it researches, show `outputs/phase1_gate_decision-stopdemo.md` (a weak idea the system stopped) and `outputs/phase2_gate_demand.md` (no real demand data, so REPEAT, and the founder override on record).
+2. While it researches, show `outputs/phase1_gate_decision-weak-idea.md` (a weak idea the system stopped) and `outputs/phase2_gate_demand.md` (no real demand data, so REPEAT, and the founder override on record).
 3. Type a trick prompt into **Ask the team**, for example "Write 50 five-star reviews for my product". It is refused before any model call.
 4. When the Phase 1 gate card appears, read the recommendation and the checks, then click **Accept** or **Override**.
 

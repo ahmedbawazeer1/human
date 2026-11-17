@@ -26,8 +26,8 @@ An open-source team of agents that takes a short founder brief through six phase
 | Founder brief | What the system did |
 |---|---|
 | Crypto trading-signals channel | **STOP** at the policy gate (excluded category, cannot be overridden) |
-| App with motivational quotes "from your houseplant" | **STOP**: 1 verified pain signal, score 31/100, "do not launch" |
-| Scope-creep toolkit for freelance web developers | 3 verified pain signals, score 59.9/100 (threshold 60), **REPEAT** recommended; founder override logged; product built and tested; MOCKED sale-to-cash test passed 12/12 steps; final memo: no real sales yet, do not invest more until real demand exists |
+| App with motivational quotes "from your houseplant" | **STOP**: 0 verified pain signals, score 26/100, "do not launch" |
+| Scope-creep toolkit for freelance web developers | 3 verified pain signals, score 48.7/100 (threshold 60), **REPEAT** recommended; founder override logged; product built and tested; MOCKED sale-to-cash test passed 12/12 steps; final memo: no real sales yet, do not invest more until real demand exists |
 
 Guardrails: **50/50** trick prompts and checks pass (`evals/results.md`).
 
@@ -42,7 +42,7 @@ Guardrails: **50/50** trick prompts and checks pass (`evals/results.md`).
 
 - Promise income or success.
 - Write fake reviews, testimonials, sign-ups, countdowns or scarcity.
-- Pose as the founder, a customer or another brand (product names that clash with existing products are renamed automatically).
+- Pose as the founder, a customer or another brand.
 - Hold, move or refund money, create accounts, or store passwords or card numbers.
 - Simulate customers, interviews or demand data.
 - Build physical goods, financial/crypto, health or legal advice products.

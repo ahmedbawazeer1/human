@@ -1,29 +1,30 @@
 # Phase 1 (Discover): market definition
 
-Run `20261117-200539-79c8` | generated 2026-11-17T20:12:09Z | model `qwen3:4b`
+Run `20261117-171828-7aa9` | generated 2026-11-17T17:25:23Z | model `qwen3:4b`
 
 ## Ideal customer
 
-Solo freelance web developers and very small agencies (1-3 people) who build websites for small businesses. These professionals often face scope creep during project execution, where clients request additional features or changes without proper budgeting or approval, leading to time and financial stress.
+Solo freelance web developers and very small agencies (1-3 people) who build websites for small businesses, who experience scope creep during project management and client interactions.
 
 ## Segments
 
-- Freelance web developers with a portfolio of small business website projects
-- Small agencies handling 1-3 projects per client
-- Clients who frequently change requirements after initial quotes
+- Freelance web developers with a history of scope creep issues
+- Small agencies facing challenges in managing client expectations
+- Clients of small businesses seeking reliable website solutions
 
 ## Existing alternatives
 
-- scopeguard ([S56](https://github.com/rene-kropf/scopeguard)): Focuses on local-first, offline functionality and uses QR/link for client approval, while the proposed tool may offer more integration with project management tools
+- scopeguard ([S56](https://github.com/rene-kropf/scopeguard)): Runs offline in the browser and uses QR/link for client approval, whereas ScopeGuard Toolkit is a dedicated tool for preventing scope creep with more structured tracking
 
 ## Market claims
 
 Every claim cites a fetched source or is labelled ASSUMPTION.
 
-- Scope creep is a common issue for freelance web developers and small agencies working with small businesses - [S6](https://news.ycombinator.com/item?id=33847838), [S7](https://news.ycombinator.com/item?id=30152847), [S50](https://news.ycombinator.com/item?id=39999134)
-- Clients often expect additional features without proper budgeting or approval - [S6](https://news.ycombinator.com/item?id=33847838), [S7](https://news.ycombinator.com/item?id=30152847), [S50](https://news.ycombinator.com/item?id=39999134)
-- Fixed quotes are typically used in phase 2 of projects after initial delivery and trust is built - [S50](https://news.ycombinator.com/item?id=39999134)
+- ScopeGuard Toolkit addresses the specific need of freelance web developers and small agencies to manage scope creep during project management and client interactions - [S6](https://news.ycombinator.com/item?id=33847838), [S7](https://news.ycombinator.com/item?id=30152847), [S50](https://news.ycombinator.com/item?id=39999134)
+- The toolkit provides a structured approach to logging requests, pricing changes, and obtaining client approval - [S56](https://github.com/rene-kropf/scopeguard), [S57](https://github.com/eamonboyle/scope-guard)
+- The tool is designed to prevent combinatorial test case scope creep by enforcing clear boundaries and budget constraints - [S7](https://news.ycombinator.com/item?id=30152847)
+- It offers a solution that is distinct from existing tools by focusing on the specific challenges faced by freelance web developers and small agencies - **ASSUMPTION**
 
 ## Market size
 
-**ASSUMPTION / not estimated.** The founder could estimate market size by surveying freelance web developers and small agencies to determine how many experience scope creep issues, then multiplying that number by the number of such professionals and agencies in the target region.
+**ASSUMPTION / not estimated.** The founder could estimate market size by surveying freelance web developers and small agencies to determine how many experience scope creep issues during project management and client interactions.

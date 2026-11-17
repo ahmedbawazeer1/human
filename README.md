@@ -2,8 +2,7 @@
 
 An open-source team of AI agents that takes a founder's brief toward a validated, sellable **digital** product, through six phases (Discover, Validate, Build, Commercial setup, Launch, Operate and learn) with a gate after every step. It cites real sources or labels claims `ASSUMPTION`, keeps the founder in control of everything that goes out, and **recommends STOP when the evidence is weak**. Runs on a local open-weight model; costs $0 per run.
 
-Demo run results (real, from `outputs/`): a crypto idea stopped by policy ([gate](outputs/phase1_gate_policy-policy-stop.md)), a weak idea stopped on evidence ([gate](outputs/phase1_gate_decision-weak-idea.md)), and a full six-phase run ([phase 1 gate](outputs/phase1_gate_decision.md), [payment test](outputs/payment_test_log.md), [final memo](outputs/phase6_step3_persevere_pivot_memo.md)). Guardrail evals: [50/50 passed](evals/results.md). Every agent action: [`decision_log.json`](decision_log.json).
-Pitch (problem, user, why open beats closed, roadmap): [docs/pitch.md](docs/pitch.md); slides: [docs/slides.md](docs/slides.md) (open `docs/slides.html` in a browser to present).
+Pitch: [docs/pitch.md](docs/pitch.md) · Slides: [docs/slides.md](docs/slides.md) (open `docs/slides.html` to present) · Guardrail evals: [evals/results.md](evals/results.md)
 
 ## Quickstart
 
@@ -11,7 +10,7 @@ Pitch (problem, user, why open beats closed, roadmap): [docs/pitch.md](docs/pitc
 docker compose up
 ```
 
-Then open **http://localhost:8000** (the page loads within about a minute; the first start also downloads the model in the background), load an example brief (or paste your own), and click **Start run**. The first start downloads the open-weight model (`qwen3:4b`, about 2.5 GB). When a gate or an outbound action needs you, an **Approve / Reject** (or **Accept / Override**) card appears on the run page.
+Then open **http://localhost:8000** (the page loads within about a minute; the model downloads in the background on first start), load an example brief (or paste your own), and click **Start run**. The first start downloads the open-weight model (`qwen3:4b`, about 2.5 GB). When a gate or an outbound action needs you, an **Approve / Reject** (or **Accept / Override**) card appears on the run page.
 
 Command-line alternative (needs Python 3.11+ and a running Ollama):
 
@@ -63,13 +62,13 @@ One orchestrator (`orchestrator.py`) runs single-purpose agents (`agents/*.py`) 
 - **Default model:** `qwen3:4b` (Apache-2.0 open weights) via **Ollama**, started by `docker compose up`. No API key, no account, no paid service.
 - **Smaller / bigger laptops:** set `LLM_MODEL=qwen3:1.7b` (faster) or `LLM_MODEL=qwen3:8b` (better) in `.env`.
 - **Any OpenAI-compatible server works:** llama.cpp server, vLLM, LM Studio, or a free hosted tier serving open-weight models such as GPT-OSS 20B/120B. Set `LLM_BASE_URL`, `LLM_MODEL` and (in an untracked `.env`) `LLM_API_KEY`. Nothing requires payment.
-- **Fast free option (tested):** GPT-OSS 120B (open weights, Apache-2.0) on Groq's free tier answers in about 1-2 s instead of about a minute on a CPU. Put these in an untracked `.env`: `LLM_BASE_URL=https://api.groq.com/openai/v1`, `LLM_MODEL=openai/gpt-oss-120b`, and your own free `LLM_API_KEY`. Free-tier rate limits are handled by waiting and retrying (HTTP 429).
+- **Fast free option (tested):** GPT-OSS 120B (open weights, Apache-2.0) on Groq's free tier answers in about 1-2 s instead of about a minute on a CPU. In an untracked `.env`: `LLM_BASE_URL=https://api.groq.com/openai/v1`, `LLM_MODEL=openai/gpt-oss-120b` and your own free `LLM_API_KEY`. Rate limits (HTTP 429) are handled by waiting and retrying.
 - **Research sources:** Hacker News Algolia API, Stack Exchange API, GitHub search API: free and keyless.
 - The demo run in `outputs/` used `qwen3:4b` (Q4_K_M GGUF, the same weights Ollama serves) on a 4-core CPU with no GPU.
 
 ## Cost per run
 
-**About $0.00 per run** (local open-weight model; the full six-phase demo run used 20,344 tokens over 24 model calls, about 20 minutes of model time on a 4-core CPU with no GPU). Exact per-run token counts and cost are printed at the end of each run and written into every gate file; each model call's cost is in `decision_log.json`. If you point the system at a metered endpoint, set `LLM_COST_IN_PER_1K` / `LLM_COST_OUT_PER_1K` and the same figures are computed in dollars.
+**About $0.00 per run** (local open-weight model; the full six-phase demo run used 19,616 tokens over 23 model calls, about 20 minutes of model time on a 4-core CPU with no GPU). Exact per-run token counts and cost are printed at the end of each run and written into every gate file; each model call's cost is in `decision_log.json`. If you point the system at a metered endpoint, set `LLM_COST_IN_PER_1K` / `LLM_COST_OUT_PER_1K` and the same figures are computed in dollars.
 
 ## Demo video
 
@@ -88,8 +87,7 @@ One orchestrator (`orchestrator.py`) runs single-purpose agents (`agents/*.py`) 
 
 ## How the project stays alive after the hackathon
 
-- **Maintainers:** Ahmed Bawazeer, Fidaa Aldeen Wadaan and Ahmed Alaidaroos maintain `main`. Every change goes through a pull request, and CI (`.github/workflows/tests.yml`) runs the smoke tests and guardrail evals before it can be merged.
-- **Release rhythm:** small monthly releases; each release re-runs the demo briefs and commits the new `outputs/` and `decision_log.json`, so results stay reproducible.
+- **Maintainers:** Ahmed Bawazeer, Fidaa Aldeen Wadaan and Ahmed Alaidaroos maintain `main`. Changes go through pull requests; CI (`.github/workflows/tests.yml`) runs the smoke tests and guardrail evals on every push.
 - **Roadmap:** real publishing connectors behind the same approval check, more evidence sources with quote verification, more product formats, resuming a run from any gate (see [ARCHITECTURE.md](ARCHITECTURE.md#roadmap)).
 - **Community:** prompts live in `prompts/` and thresholds in `config/gates.json`, so people can improve them without touching code; trick prompts in `evals/` grow with every new attack we see.
 - **Funding:** the tool stays free and open (MIT). Running cost is $0 on local models, so the project does not depend on API credits. Possible support: sponsorships, grants for open-source AI tooling, and paid help setting it up for incubators, never a paywall on core features.

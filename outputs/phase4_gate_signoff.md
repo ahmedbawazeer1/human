@@ -1,6 +1,6 @@
 # Phase 4 (Commercial setup): gate: commercial
 
-Run `20261117-200539-79c8` | generated 2026-11-17T20:21:48Z | model `qwen3:4b`
+Run `20261117-171828-7aa9` | generated 2026-11-17T17:34:22Z | model `qwen3:4b`
 
 **Recommendation: GO**
 
@@ -20,5 +20,5 @@ Next step: Founder signs off price and policies.
 
 ## Run cost so far
 
-- Model calls: 20, tokens: 17,641 (13,157 in / 4,484 out), model time: 969s
+- Model calls: 19, tokens: 17,003 (12,704 in / 4,299 out), model time: 942s
 - Cost: **$0.0000** (local open-weight model `qwen3:4b`)
