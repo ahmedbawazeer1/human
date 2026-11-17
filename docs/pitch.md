@@ -4,7 +4,7 @@ Team Human: Ahmed Bawazeer, Fidaa Aldeen Wadaan, Ahmed Alaidaroos. Slides in tex
 
 ## 1. The problem
 
-First-time founders get two kinds of help from AI tools today: a generic business plan, or a tool that says "yes" to every idea. Neither tells them **"don't build this"** when the evidence is weak, and most of them run on closed, paid platforms that lock the founder's data in.
+First-time founders get two kinds of help from AI tools today: a generic business plan, or a tool that says "yes" to every idea. Neither tells them **"don't build this"** when the evidence is weak, and most of them run on closed, paid platforms that lock the founder's data in. (**ASSUMPTION**: our own observation from trying such tools, not a measured study.)
 
 - The cost of a wrong "yes" is weeks of the founder's time and savings spent on something nobody asked for. (**ASSUMPTION**: we did not measure this; it is the motivation, not a statistic.)
 
