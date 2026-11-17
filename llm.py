@@ -101,6 +101,10 @@ class LLMClient:
             if obj is not None:
                 return obj, total_cost
             self.last_bad_json = text
+            dbg = os.getenv("LLM_DEBUG_FILE")
+            if dbg:
+                with open(dbg, "a", encoding="utf-8") as f:
+                    f.write(f"--- bad JSON ({len(text)} chars)\nPROMPT TAIL: {user[-300:]!r}\nANSWER: {text!r}\n")
             prompt = user + "\n\nYour last answer was not valid JSON. Return ONLY valid JSON, shorter."
         raise LLMError("model did not return valid JSON")
 
