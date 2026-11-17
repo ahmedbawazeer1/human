@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Open Venture Builder</title>
+<style>
+:root{--bg:#0f172a;--card:#ffffff;--ink:#111827;--muted:#4b5563;--accent:#4f46e5}
+body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.slide{display:none;box-sizing:border-box;width:100vw;height:100vh;padding:6vh 7vw;background:var(--card);color:var(--ink);position:relative;overflow:auto}
+.slide.on{display:block} h1{font-size:3.2em;margin:.2em 0;color:var(--accent)} h2{font-size:2.2em;color:var(--accent);margin-top:0}
+h3{font-size:1.5em;font-weight:500} p,li,td,th{font-size:1.35em;line-height:1.45} li{margin:.35em 0}
+table{border-collapse:collapse;width:100%} td,th{border-bottom:1px solid #e5e7eb;padding:.45em .6em;text-align:left;vertical-align:top}
+th{color:var(--muted)} pre{background:#f3f4f6;padding:1em;border-radius:8px;font-size:1.15em;white-space:pre-wrap}
+code{background:#eef2ff;padding:.05em .3em;border-radius:4px} .num{position:absolute;right:3vw;bottom:2vh;color:var(--muted)}
+</style></head><body>
+<section class="slide"><h1>Open Venture Builder</h1>
+<h3>An open-source AI team that can tell a founder <strong>&quot;don&#x27;t launch this&quot;</strong></h3>
+<p>Team Human: Ahmed Bawazeer · Fidaa Aldeen Wadaan · Ahmed Alaidaroos</p>
+<p>MADS × CSEA AI Hackathon · Fall 2026 · MIT licence · $0 per run</p><div class="num">1/14</div></section>
+<section class="slide"><h2>The problem</h2>
+<ul><li>First-time founders get two kinds of AI help: a generic business plan, or a tool that says <strong>&quot;yes&quot;</strong> to every idea.</li><li>Almost none of them say <strong>&quot;stop, the evidence is weak&quot;</strong>.</li><li>Most run on closed, paid platforms that keep the founder&#x27;s data. (<strong>ASSUMPTION</strong>: our own observation, not a measured study.)</li></ul><div class="num">2/14</div></section>
+<section class="slide"><h2>The user</h2>
+<p>A solo founder or student with:</p>
+<ul><li>a starting idea and some skills</li><li>a small budget ($50-$500) and a few hours a week</li><li>a <strong>digital</strong> product in mind (templates, guides, small tools)</li><li>the wish for an <strong>honest answer before spending money</strong></li></ul><div class="num">3/14</div></section>
+<section class="slide"><h2>What we built: six phases, a gate after every step</h2>
+<pre>Discover → Validate → Build → Commercial setup → Launch → Operate &amp; learn
+   🚦          🚦        🚦            🚦             🚦           🚦
+       go · repeat · pivot · stop   (thresholds fixed BEFORE evidence)</pre>
+<ul><li>12 role agents (intake, researcher, strategist, interviewer, validator, builder, QA, pricing, legal, launcher, operator, assistant)</li><li>One orchestrator, one decision log: <strong>every action recorded</strong> with sources, model, cost, approver</li><li>Runs on a free open-weight model: local <code>qwen3:4b</code>, or GPT-OSS 120B on a free tier</li></ul><div class="num">4/14</div></section>
+<section class="slide"><h2>Evidence you can check</h2>
+<ul><li>Real public sources: Hacker News, Stack Exchange, Show HN, GitHub</li><li>Every quote is <strong>checked by code</strong> against the fetched page; quotes that are not there, or off-topic, are dropped and logged</li><li>Any claim without a source is printed as <strong>ASSUMPTION</strong></li><li>Market size is never invented</li></ul><div class="num">5/14</div></section>
+<section class="slide"><h2>Real results from our demo run (<code>outputs/</code>)</h2>
+<table><tr><th>Founder brief</th><th>What the system did</th></tr><tr><td>Crypto trading-signals channel</td><td><strong>STOP</strong>: excluded category, cannot be overridden</td></tr><tr><td>&quot;Motivational quotes from your houseplant&quot; app</td><td><strong>STOP</strong>: 1 verified pain signal, score 31/100</td></tr><tr><td>Scope-creep toolkit for freelance web developers</td><td>3 verified signals, score 59.9/100 → <strong>REPEAT</strong>; founder override logged; product built and tested; sale-to-cash test passed</td></tr></table>
+<p>Final memo: <em>no real sales yet, do not invest more until real demand exists.</em></p><div class="num">6/14</div></section>
+<section class="slide"><h2>The founder stays in control</h2>
+<ul><li>Nothing is <strong>published, sent, spent or signed</strong> without founder approval</li><li>Each approval is <strong>bound to the exact content</strong> (hash): change one word → approve again</li><li>No founder available → <strong>default is reject</strong></li><li>Overrides are allowed (except excluded categories) and always logged</li></ul><div class="num">7/14</div></section>
+<section class="slide"><h2>Safety: tested against trick prompts</h2>
+<ul><li>&quot;Write 50 five-star reviews&quot; → <strong>refused before any model call</strong></li><li>Fake sign-ups, countdown timers, impersonation, income promises, moving money, storing cards → refused</li><li>Model output is scanned: promises, fake social proof and fake urgency are removed</li><li><strong>50/50</strong> guardrail checks pass (<code>evals/results.md</code>), 42 smoke tests pass</li></ul><div class="num">8/14</div></section>
+<section class="slide"><h2>Sale to cash (MOCKED, no real money)</h2>
+<pre>checkout → signed payment webhook → automatic delivery
+duplicate webhook → ignored        forged webhook → rejected
+founder-approved refund → access revoked → books reconcile</pre>
+<p>12/12 steps passed: gross − fees − refunds = payouts</p><div class="num">9/14</div></section>
+<section class="slide"><h2>Why open beats closed</h2>
+<ul><li><strong>Trust:</strong> every decision is in <code>decision_log.json</code>, with its sources, model, cost and approver</li><li><strong>Cost:</strong> open-weight models, $0 per run, no paid API</li><li><strong>Control:</strong> thresholds and prompts are plain files the founder can read and change</li><li><strong>Safety by design:</strong> the rules that matter are code, not prompts</li></ul><div class="num">10/14</div></section>
+<section class="slide"><h2>What the system will NOT do</h2>
+<ul><li>Promise income or success</li><li>Write fake reviews, testimonials, sign-ups, countdowns</li><li>Pose as the founder, a customer or another brand</li><li>Hold, move or refund money, create accounts, store passwords or cards</li><li>Simulate customers, interviews or demand data</li><li>Build physical goods, financial/crypto, health or legal advice products</li></ul><div class="num">11/14</div></section>
+<section class="slide"><h2>Realistic roadmap</h2>
+<table><tr><th>When</th><th>What</th></tr><tr><td>Month 1</td><td>Resume a run from any gate with new real evidence (interviews, sign-ups)</td></tr><tr><td>Month 2</td><td>Publish from the founder&#x27;s own accounts, behind the same approval check</td></tr><tr><td>Month 3</td><td>More evidence sources with quote checks; more product formats</td></tr><tr><td>Month 4+</td><td>Payment-provider adapter in test mode behind the existing webhook and reconcile code</td></tr></table><div class="num">12/14</div></section>
+<section class="slide"><h2>How the project stays alive</h2>
+<ul><li><strong>Maintainers:</strong> Ahmed Bawazeer, Fidaa Aldeen Wadaan, Ahmed Alaidaroos</li><li><strong>Community:</strong> prompts, thresholds and trick prompts are plain files anyone can improve</li><li><strong>Funding:</strong> MIT licence and $0 running cost; sponsorships, open-source AI grants, paid setup help for incubators; never a paywall on core features</li></ul><div class="num">13/14</div></section>
+<section class="slide"><h2>Honest limits, and the ask</h2>
+<ul><li>Demand testing needs real traffic; the system says <strong>REPEAT</strong> instead of inventing numbers</li><li>Publishing, payments and delivery emails are MOCKED</li><li>On a CPU-only laptop a full run takes about 20 minutes; on a free tier, minutes</li></ul>
+<p><strong>Try it:</strong> <code>docker compose up</code> → http://localhost:8000</p>
+<p><strong>Repo:</strong> github.com/ahmedbawazeer1/human</p><div class="num">14/14</div></section>
+<script>
+const s=[...document.querySelectorAll('.slide')];let i=0;const show=n=>{i=Math.max(0,Math.min(s.length-1,n));s.forEach((e,k)=>e.classList.toggle('on',k===i));};
+document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key))show(i+1);if(['ArrowLeft','PageUp'].includes(e.key))show(i-1);});
+document.addEventListener('click',e=>show(e.clientX>innerWidth/2?i+1:i-1));show(0);
+</script></body></html>

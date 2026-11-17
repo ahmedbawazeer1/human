@@ -3,7 +3,7 @@
 An open-source team of AI agents that takes a founder's brief toward a validated, sellable **digital** product, through six phases (Discover, Validate, Build, Commercial setup, Launch, Operate and learn) with a gate after every step. It cites real sources or labels claims `ASSUMPTION`, keeps the founder in control of everything that goes out, and **recommends STOP when the evidence is weak**. Runs on a local open-weight model; costs $0 per run.
 
 Demo run results (real, from `outputs/`): a crypto idea stopped by policy ([gate](outputs/phase1_gate_policy-policy-stop.md)), a weak idea stopped on evidence ([gate](outputs/phase1_gate_decision-weak-idea.md)), and a full six-phase run ([phase 1 gate](outputs/phase1_gate_decision.md), [payment test](outputs/payment_test_log.md), [final memo](outputs/phase6_step3_persevere_pivot_memo.md)). Guardrail evals: [50/50 passed](evals/results.md). Every agent action: [`decision_log.json`](decision_log.json).
-Pitch (problem, user, why open beats closed, roadmap): [docs/pitch.md](docs/pitch.md).
+Pitch (problem, user, why open beats closed, roadmap): [docs/pitch.md](docs/pitch.md); slides: [docs/slides.md](docs/slides.md) (open `docs/slides.html` in a browser to present).
 
 ## Quickstart
 

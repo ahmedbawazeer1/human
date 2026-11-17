@@ -1,6 +1,6 @@
 # Pitch: Open Venture Builder
 
-Team Human: Ahmed Bawazeer, Fidaa Aldeen Wadaan, Ahmed Alaidaroos. Slides in text form (one `##` per slide).
+Team Human: Ahmed Bawazeer, Fidaa Aldeen Wadaan, Ahmed Alaidaroos. Slides in text form (one `##` per slide). Presentation version: [slides.md](slides.md) / `slides.html`.
 
 ## 1. The problem
 
