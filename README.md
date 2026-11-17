@@ -1,6 +1,6 @@
 # Open Venture Builder
 
-An open-source team of AI agents that takes a founder's brief toward a validated, sellable **digital** product, through six phases (Discover, Validate, Build, Commercial setup, Launch, Operate and learn) with a gate after every step. It cites real sources or labels claims `ASSUMPTION`, keeps the founder in control of everything that goes out, and **recommends STOP when the evidence is weak**. Runs on a local open-weight model; costs $0 per run.
+An open-source team of AI agents that takes a founder's brief toward a validated, sellable **digital** product, through six phases (Discover, Validate, Build, Commercial setup, Launch, Operate and learn) with a gate after every step. It cites real sources or labels claims `ASSUMPTION`, keeps the founder in control of everything that goes out, and **recommends STOP when the evidence is weak**. Runs on a local open-weight model; costs $0 per run. Pitch: [docs/pitch.md](docs/pitch.md).
 
 ## Quickstart
 
