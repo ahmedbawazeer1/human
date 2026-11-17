@@ -66,7 +66,7 @@ One orchestrator (`orchestrator.py`) runs single-purpose agents (`agents/*.py`) 
 
 ## Cost per run
 
-**About $0.00 per run** (local open-weight model; the full six-phase demo run used 19,616 tokens over 23 model calls, about 20 minutes of model time on a 4-core CPU with no GPU). Exact per-run token counts and cost are printed at the end of each run and written into every gate file; each model call's cost is in `decision_log.json`. If you point the system at a metered endpoint, set `LLM_COST_IN_PER_1K` / `LLM_COST_OUT_PER_1K` and the same figures are computed in dollars.
+**About $0.00 per run** (local open-weight model; the full six-phase demo run used 20,344 tokens over 24 model calls, about 20 minutes of model time on a 4-core CPU with no GPU). Exact per-run token counts and cost are printed at the end of each run and written into every gate file; each model call's cost is in `decision_log.json`. If you point the system at a metered endpoint, set `LLM_COST_IN_PER_1K` / `LLM_COST_OUT_PER_1K` and the same figures are computed in dollars.
 
 ## Demo video
 

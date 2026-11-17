@@ -1,13 +1,13 @@
 # Phase 1 (Discover): gate: evidence
 
-Run `20261117-171828-7aa9` | generated 2026-11-17T17:26:23Z | model `qwen3:4b`
+Run `20261117-200539-79c8` | generated 2026-11-17T20:13:07Z | model `qwen3:4b`
 
 **Recommendation: REPEAT**
 
 | Check | Value | Threshold (set in advance) | Result |
 |---|---|---|---|
 | verified pain signals (sourced) | 3 | >= 5 | FAIL |
-| opportunity score (0-100) | 48.7 | >= 60 | FAIL |
+| opportunity score (0-100) | 59.9 | >= 60 | FAIL |
 | customer interviews supplied | 0 | >= 5 | FAIL - none supplied yet |
 
 Why:
@@ -25,5 +25,5 @@ Next step: Repeat Discover: run the Mom Test interviews and narrow the customer 
 
 ## Run cost so far
 
-- Model calls: 9, tokens: 10,870 (9,142 in / 1,728 out), model time: 462s
+- Model calls: 9, tokens: 10,887 (9,157 in / 1,730 out), model time: 447s
 - Cost: **$0.0000** (local open-weight model `qwen3:4b`)

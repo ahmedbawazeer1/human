@@ -1,20 +1,21 @@
 # Phase 3 (Build): MVP spec
 
-Run `20261117-171828-7aa9` | generated 2026-11-17T17:29:30Z | model `qwen3:4b`
+Run `20261117-200539-79c8` | generated 2026-11-17T20:16:23Z | model `qwen3:4b`
 
-**Product:** ScopeGuard Toolkit
+**Product:** ScopeControl Toolkit
 
-**Promise:** Helps manage project boundaries to avoid unnecessary changes.
+**Promise:** Helps manage project scope to avoid unnecessary changes during web development projects.
 
 ## Sections and acceptance tests
 
-- **Scoping Questionnaire**: Identify initial project requirements and expectations (must include: "client role")
-- **Change Request Process**: Define steps for requesting and approving scope changes (must include: "approval workflow")
-- **Client Email Templates**: Provide ready-to-use emails for communication around scope (must include: "scope confirmation")
-- **Scope Boundary Checklist**: Ensure all project boundaries are clearly defined (must include: "deliverable definition")
+- **Scoping Questionnaire**: Collect initial requirements and expectations from the client before development starts (must include: "project goals")
+- **Change Request Process**: Define steps for requesting and approving changes to the project scope (must include: "change approval workflow")
+- **Client Email Templates**: Provide pre-written emails to communicate project status, delays, or scope changes to the client (must include: "scope clarification")
+- **Scope Definition Checklist**: Ensure all key aspects of the project are clearly defined at the start of development (must include: "deliverable expectations")
 
 ## Out of scope
 
-- project management tools
-- team training resources
-- client onboarding services
+- Tools for time tracking
+- Project management software
+- Client onboarding services
+- Marketing materials for the toolkit itself

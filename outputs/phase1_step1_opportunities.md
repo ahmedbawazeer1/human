@@ -1,6 +1,6 @@
 # Phase 1 (Discover): opportunities
 
-Run `20261117-171828-7aa9` | generated 2026-11-17T17:24:04Z | model `qwen3:4b`
+Run `20261117-200539-79c8` | generated 2026-11-17T20:10:54Z | model `qwen3:4b`
 
 Search queries (problem): scope creep with clients, website project going off track, client changing requirements frequently, freelance web developer scope issues
 
@@ -32,7 +32,7 @@ Each quote below was checked by code against the fetched text of the source. Quo
 
 ### 1. ScopeGuard Toolkit (founder idea, sharpened)
 
-Toolkit to prevent scope creep for freelance web developers and small agencies.
+Toolkit to stop scope creep for freelance web developers and small agencies.
 
 - Customer: Solo freelance web developers and very small agencies (1-3 people) building websites for small businesses.
 - Format: Digital toolkit with scoping questionnaire, change-request process, and client email templates.
@@ -40,7 +40,7 @@ Toolkit to prevent scope creep for freelance web developers and small agencies.
 
 ### 2. ScopeGuard Pro
 
-A premium version of ScopeGuard with client approval tracking and email templates.
+A paid version of ScopeGuard with client approval tracking and email templates.
 
 - Customer: Solo freelance web developers and small agencies.
 - Format: Web app with API for integration.

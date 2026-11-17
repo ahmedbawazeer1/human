@@ -1,12 +1,12 @@
 # Phase 4 (Commercial setup): draft policies
 
-Run `20261117-171828-7aa9` | generated 2026-11-17T17:34:22Z | model `qwen3:4b`
+Run `20261117-200539-79c8` | generated 2026-11-17T20:21:48Z | model `qwen3:4b`
 
-# Terms of Sale: ScopeGuard Toolkit
+# Terms of Sale: ScopeControl Toolkit
 
 > DRAFT generated from an open template. This is not legal advice. The founder must review it, ideally with a qualified professional, and approve it before use.
 
-1. **What you buy.** A personal licence to download and use the digital product "ScopeGuard Toolkit" for your own work. You may not resell or redistribute the files.
+1. **What you buy.** A personal licence to download and use the digital product "ScopeControl Toolkit" for your own work. You may not resell or redistribute the files.
 2. **Delivery.** After payment is confirmed you receive a private download link by email. No physical goods are shipped.
 3. **Price.** The price shown on the store page at the time of purchase, including any taxes the payment provider shows at checkout.
 4. **No guarantees of results.** The product contains practical guidance and templates. We do not promise any income, sales or business outcome.
@@ -18,7 +18,7 @@ Run `20261117-171828-7aa9` | generated 2026-11-17T17:34:22Z | model `qwen3:4b`
 
 ---
 
-# Privacy Notice: ScopeGuard Toolkit
+# Privacy Notice: ScopeControl Toolkit
 
 > DRAFT generated from an open template. This is not legal advice. The founder must review and approve it before use.
 
@@ -33,7 +33,7 @@ Run `20261117-171828-7aa9` | generated 2026-11-17T17:34:22Z | model `qwen3:4b`
 
 ---
 
-# Refund Policy: ScopeGuard Toolkit
+# Refund Policy: ScopeControl Toolkit
 
 > DRAFT generated from an open template. This is not legal advice. The founder must review and approve it before use.
 

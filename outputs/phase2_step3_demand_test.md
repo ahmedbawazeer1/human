@@ -1,6 +1,6 @@
 # Phase 2 (Validate): demand test
 
-Run `20261117-171828-7aa9` | generated 2026-11-17T17:28:56Z | model `qwen3:4b`
+Run `20261117-200539-79c8` | generated 2026-11-17T20:15:37Z | model `qwen3:4b`
 
 ## Target (set before the test)
 
@@ -8,16 +8,16 @@ Run `20261117-171828-7aa9` | generated 2026-11-17T17:28:56Z | model `qwen3:4b`
 
 ## How to reach the right people (no spam, no paid lists)
 
-- **LinkedIn**: Post a single, clear post about the ScopeGuard Toolkit targeting freelance web developers and small agencies, using relevant keywords and hashtags.
-- **Reddit**: Create a subtle post in r/Websites or r/WebDesign explaining the problem and solution without mentioning the product directly.
-- **WordPress blogs**: Comment on high-authority WordPress blogs related to web development, offering to help with a specific question about website building tools.
-- **Twitter**: Create a thread that addresses common pain points of solo freelance web developers and small agencies, ending with a link to the landing page.
+- **LinkedIn**: Post a single, clear message on LinkedIn about the ScopeGuard Toolkit, targeting freelance web developers and small agencies. Use a direct link to the landing page with no testimonials or urgency.
+- **Reddit**: Create a post in the r/Websitesubindustry subreddit explaining the problem of website management for small businesses and linking to the landing page. Avoid any promotional language or urgency.
+- **Twitter/X**: Tweet a concise message about the ScopeGuard Toolkit, targeting freelance web developers and small agencies. Include a direct link to the landing page with no testimonials or urgency.
+- **YouTube**: Create a short video explaining the problem of website management for small businesses and linking to the landing page. Use a channel that focuses on business tools and productivity.
 
 ## What to measure
 
-- Number of unique visitors to the landing page
-- Number of direct sign-ups from the landing page
-- Engagement rate on social media posts related to the product
+- Number of unique sign-ups in 14 days
+- Engagement rate on LinkedIn posts
+- Impressions from YouTube videos
 
 ## Results
 
