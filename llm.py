@@ -122,6 +122,7 @@ def strip_thinking(text: str) -> str:
 
 
 def _repair(s: str) -> str:
+    s = re.sub(r"(?<=[\[,:\s])(S\d+)(?=\s*[,\]}])", r'"\1"', s)  # bare source ids: [S8, S18]
     s = re.sub(r",\s*([}\]])", r"\1", s)            # trailing commas
     s = re.sub(r"//[^\n]*", "", s)                     # comments
     # close a truncated answer: drop the last partial item and balance brackets

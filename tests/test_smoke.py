@@ -145,3 +145,9 @@ def test_committed_decision_log_is_valid():
     entries = json.loads((ROOT / "decision_log.json").read_text())
     assert entries, "demo decision log is empty"
     assert not validate_entries(entries)
+
+
+def test_json_repair_handles_small_model_mistakes():
+    from llm import extract_json
+    assert extract_json('{"ids": [S8, S18], "id": S3}') == {"ids": ["S8", "S18"], "id": "S3"}
+    assert extract_json('Sure: {"a": [1, 2,], "b": "x') == {"a": [1, 2]}  # a cut-off last field is dropped, not guessed
