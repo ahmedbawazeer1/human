@@ -30,34 +30,56 @@ def score_opportunity(ratings: dict, evidence_count: int) -> dict:
 class StrategistAgent(BaseAgent):
     role = "strategist"
 
-    def opportunities(self, brief: dict, signals: list[dict], products: list) -> list[dict]:
-        sig_text = "\n".join(f"[{s['id']}] \"{s['quote']}\"" for s in signals[:14]) or "(no verified pain signals found)"
-        prod_text = "\n".join(f"[{p.id}] {p.title}: {p.short(120)}" for p in products[:10]) or "(none found)"
+    RUBRIC = ("Ratings 1-5, be strict and use the founder's actual skills, budget and time: "
+              "founder_fit (5 = the founder's skills are exactly what this needs), feasibility (1 = needs skills, money or "
+              "time the founder does not have; 5 = shippable in 2 weeks with what they have), differentiation (5 = clearly "
+              "different from the existing products listed), values_fit (5 = fully matches the founder's values). "
+              "5 is rare. Give one short reason (under 20 words) per rating.")
+
+    def _rate(self, brief, sig_text, prod_text, ask: str, action: str, sources) -> list[dict]:
         obj = self.ask_json(
             f"FOUNDER BRIEF:\nIdea: {brief.get('idea')}\nSkills: {brief.get('skills')}\nBudget: {brief.get('budget')}\n"
             f"Time: {brief.get('time')}\nTarget market: {brief.get('target_market')}\nValues: {brief.get('values')}\n\n"
-            f"VERIFIED PAIN SIGNALS:\n{sig_text}\n\nEXISTING PRODUCTS:\n{prod_text}\n\n"
-            "Propose 3 DIGITAL product opportunities: #1 is a sharpened version of the founder's own idea, #2 and #3 are "
-            "alternatives that fit the same founder's skills and market. No physical goods, no financial/crypto, no health or "
-            "legal advice products. For each give: title, one_liner, customer (specific), format (e.g. template kit, "
-            "guide, small web tool, course), signal_ids (ids of the pain signals above that support it; [] if none), "
-            "ratings (1-5 integers for founder_fit, feasibility, differentiation, values_fit), and rating_reasons (one short "
-            "sentence per rating). Be strict: rate against the founder's actual skills, budget and time; 5 is rare.\n"
+            f"VERIFIED PAIN SIGNALS:\n{sig_text}\n\nEXISTING PRODUCTS:\n{prod_text}\n\n{ask}\n{self.RUBRIC}\n"
+            "Digital products only: no physical goods, no financial/crypto, no health or legal advice. Keep strings short.\n"
             'JSON: {"opportunities": [{"title": "", "one_liner": "", "customer": "", "format": "", "signal_ids": [], '
-            '"ratings": {"founder_fit": 3, "feasibility": 3, "differentiation": 3, "values_fit": 3}, "rating_reasons": {}}]}',
-            action="find_opportunities", sources=[s["url"] for s in signals], max_tokens=1800)
+            '"ratings": {"founder_fit": 1, "feasibility": 1, "differentiation": 1, "values_fit": 1}, '
+            '"reasons": {"founder_fit": "", "feasibility": "", "differentiation": "", "values_fit": ""}}]}',
+            action=action, sources=sources, max_tokens=1000)
+        items = obj.get("opportunities") if isinstance(obj.get("opportunities"), list) else obj.get("items")
+        return [o for o in as_list(items) if isinstance(o, dict) and o.get("title")]
+
+    def opportunities(self, brief: dict, signals: list[dict], products: list) -> list[dict]:
+        sig_text = "\n".join(f"[{s['id']}] \"{s['quote']}\"" for s in signals[:12]) or "(no verified pain signals found)"
+        prod_text = "\n".join(f"[{p.id}] {p.title[:80]}: {p.short(100)}" for p in products[:8]) or "(none found)"
+        urls = [s["url"] for s in signals]
+        own = []
+        for _ in range(2):  # one retry: the founder's own idea must be rated
+            own = self._rate(brief, sig_text, prod_text,
+                             "Sharpen the FOUNDER'S OWN idea into ONE specific digital product (keep the founder's idea; make "
+                             "the customer and format concrete) and rate it.", "find_opportunities:founder_idea", urls)
+            if own:
+                break
+        alts = self._rate(brief, sig_text, prod_text,
+                          "Propose TWO different alternative digital products that fit this founder's skills and market "
+                          "better, and rate them. signal_ids: only ids above that directly support each one.",
+                          "find_opportunities:alternatives", urls)
         valid_ids = {s["id"] for s in signals}
         opps = []
-        for i, o in enumerate(as_list(obj.get("opportunities"))[:3]):
-            if not isinstance(o, dict):
-                continue
-            ids = [x for x in as_list(o.get("signal_ids")) if str(x) in valid_ids]
-            if i == 0:
-                ids = sorted(valid_ids, key=lambda x: int(x[1:]))  # the founder's own problem: all verified signals
+        for i, o in enumerate(own[:1] + alts[:2]):
+            founder = i == 0 and bool(own)
+            ids = [str(x) if str(x).startswith("S") else f"S{x}" for x in as_list(o.get("signal_ids"))]
+            ids = [x for x in ids if x in valid_ids]
+            if founder:
+                ids = sorted(valid_ids, key=lambda x: int(x[1:]))  # the founder's problem: every verified signal
             sc = score_opportunity(o.get("ratings") or {}, len(ids))
             o = self.clean_obj(o, "opportunities")
-            o.update({"signal_ids": ids, "score": sc["total"], "score_parts": sc["parts"], "is_founder_idea": i == 0})
+            o.update({"signal_ids": ids, "score": sc["total"], "score_parts": sc["parts"], "is_founder_idea": founder,
+                      "rating_reasons": o.get("reasons") or o.get("rating_reasons") or {}})
             opps.append(o)
+        if not own:
+            self.ctx.log.append("strategist", "rate_founder_idea_failed", model=None, cost=0, outcome="model_error",
+                                detail="model gave no usable rating; the founder idea is scored on evidence only")
         self.ctx.log.append("strategist", "score_opportunities", model=None, cost=0,
                             detail="; ".join(f"{o.get('title')}: {o['score']}" for o in opps))
         return opps

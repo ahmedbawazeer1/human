@@ -12,9 +12,31 @@ Method:
 from __future__ import annotations
 
 import os
+import re
 
 from agents.base import BaseAgent, as_list
 from tools import research
+
+
+STOPWORDS = set("""about after again also another because been before being between both build built could daily does doing down each
+every from have help helps into just like make many more most much need only other over people really same should some such than that
+their them then there these they this those through tool tools very want what when where which while with without would your yours
+using used user users app apps mobile online digital product products simple easy best better small new get gets
+send sends ready stop stops start keep""".split())
+
+
+def keywords(*texts) -> set[str]:
+    words = set()
+    for t in texts:
+        for w in re.findall(r"[a-z]{4,}", str(t or "").lower()):
+            if w not in STOPWORDS:
+                words.add(w[:-1] if w.endswith("s") and len(w) > 4 else w)
+    return words
+
+
+def relevance_hits(source, kws: set[str]) -> set[str]:
+    text = (source.title + " " + source.text).lower()
+    return {k for k in kws if re.search(rf"\b{re.escape(k)}", text)}
 
 
 class ResearcherAgent(BaseAgent):
@@ -30,7 +52,10 @@ class ResearcherAgent(BaseAgent):
             action="plan_search_queries", max_tokens=300)
         pq = [q for q in as_list(obj.get("problem_queries")) if isinstance(q, str)][:4]
         prod = [q for q in as_list(obj.get("product_queries")) if isinstance(q, str)][:2]
-        return pq or [str(brief.get("idea"))[:40]], prod or [str(brief.get("idea"))[:40]]
+        pq = pq or [str(brief.get("idea"))[:40]]
+        prod = prod or [str(brief.get("idea"))[:40]]
+        self.ctx.state["queries"] = pq + prod
+        return pq, prod
 
     def gather(self, problem_queries: list[str], product_queries: list[str]) -> dict:
         reg = self.ctx.registry
@@ -48,7 +73,13 @@ class ResearcherAgent(BaseAgent):
 
     def extract_pain_signals(self, brief: dict, sources: list, max_sources: int | None = None) -> list[dict]:
         max_sources = max_sources or int(os.getenv("RESEARCH_MAX_SOURCES", "24"))
-        sources = sorted(sources, key=lambda s: -len(s.text or ""))[:max_sources]
+        # Code-level relevance filter: a post must mention at least 2 distinct key terms of the problem.
+        kws = keywords(brief.get("idea"), brief.get("target_market"), " ".join(self.ctx.state.get("queries", [])))
+        relevant = [s for s in sources if len(relevance_hits(s, kws)) >= 2]
+        self.ctx.log.append("researcher", "filter_relevant_sources", model=None, cost=0,
+                            sources=[s.url for s in relevant],
+                            detail=f"{len(relevant)}/{len(sources)} posts mention >=2 key terms of the problem")
+        sources = sorted(relevant, key=lambda s: -len(s.text or ""))[:max_sources]
         verified = []
         for i in range(0, len(sources), 6):
             batch = sources[i:i + 6]
@@ -56,13 +87,15 @@ class ResearcherAgent(BaseAgent):
             obj = self.ask_json(
                 f"PROBLEM we are testing: {brief.get('idea')} (for {brief.get('target_market')}).\n\n"
                 f"POSTS:\n{listing}\n\n"
-                "For each post, decide if the author (or the people they describe) actually EXPERIENCES this problem "
-                "or a close variant of it (wasted time, money, frustration, asking for a solution). "
-                "Ads or product launches by vendors do NOT count. If yes, copy a short EXACT quote (8-25 words) from the post.\n"
-                'JSON: {"signals": [{"id": "S1", "is_pain": true, "quote": "..."}]}',
+                "For each post answer two questions. relevant: is the post about THIS specific problem for THIS kind of "
+                "customer (not just a similar word)? is_pain: does the author or the people they describe actually EXPERIENCE "
+                "it (wasted time or money, frustration, asking for a solution)? Ads and product launches by vendors are not pain. "
+                "Most posts are NOT relevant; say false when unsure. If both are true, copy a short EXACT quote (8-25 words) "
+                "from the post that shows the problem.\n"
+                'JSON: {"signals": [{"id": "S1", "relevant": false, "is_pain": false, "quote": null}]}',
                 action="extract_pain_signals", sources=[s.url for s in batch], max_tokens=900)
             for sig in as_list(obj.get("signals")):
-                if not isinstance(sig, dict) or not sig.get("is_pain"):
+                if not isinstance(sig, dict) or not sig.get("is_pain") or not sig.get("relevant"):
                     continue
                 src = self.ctx.registry.get(sig.get("id", ""))
                 quote = (sig.get("quote") or "").strip().strip('"')

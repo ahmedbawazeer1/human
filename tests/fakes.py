@@ -35,14 +35,16 @@ class FakeLLM(LLMClient):
             return j({"problem_queries": ["scope creep clients"], "product_queries": ["scope template"]})
         if "POSTS:" in u:
             ids = re.findall(r"^\[(S\d+)\]", u, flags=re.M)
-            return j({"signals": [{"id": i, "is_pain": self.pain, "quote": PAIN_TEXT[:80]} for i in ids]})
-        if "Propose 3 DIGITAL" in u:
+            return j({"signals": [{"id": i, "relevant": self.pain, "is_pain": self.pain, "quote": PAIN_TEXT[:80]} for i in ids]})
+        if "Sharpen the FOUNDER'S OWN idea" in u:
             r = 4 if self.pain else 1
             return j({"opportunities": [
                 {"title": "Scope Kit", "one_liner": "Stop scope creep", "customer": "freelance devs", "format": "toolkit",
                  "signal_ids": [], "ratings": {"founder_fit": r, "feasibility": r, "differentiation": r, "values_fit": r},
-                 "rating_reasons": {"founder_fit": "ok"}},
-                {"title": "Alt", "one_liner": "alt", "customer": "c", "format": "guide", "signal_ids": [],
+                 "reasons": {"founder_fit": "ok"}}]})
+        if "Propose TWO different alternative" in u:
+            return j({"opportunities": [
+                {"title": "Alt", "one_liner": "alt", "customer": "c", "format": "guide", "signal_ids": ["S1"],
                  "ratings": {"founder_fit": 1, "feasibility": 1, "differentiation": 1, "values_fit": 1}}]})
         if "Define the market" in u:
             return j({"icp": "Solo devs", "segments": ["solo"], "competitors": [{"name": "P1", "source_id": "S1", "difference": "d"}],

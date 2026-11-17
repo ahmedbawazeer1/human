@@ -111,7 +111,7 @@ class Pipeline:
         else:
             final = result.outcome
         body = self.header(phase, f"gate: {result.gate}") + result.to_markdown()
-        body += (f"\n\n## Founder decision\n\n- Choice: **{decision.choice}** ({decision.status}, via {decision.channel})\n"
+        body += (f"\n\n## Founder decision\n\n- Choice: **{decision.choice}** (decided by {decision.by or 'nobody: default reject'}, via {decision.channel})\n"
                  f"- Reason: {decision.reason}\n- Final outcome: **{final.upper()}**\n")
         if final == "override_go":
             body += ("\n> The founder chose to continue against the system's recommendation. The recommendation above "
@@ -184,10 +184,13 @@ class Pipeline:
         self.ctx.state["products"] = found["product_sources"]
         S = StrategistAgent(self.ctx)
         opps = S.opportunities(brief, signals, found["product_sources"])
-        if not opps:
-            opps = [{"title": brief.get("idea"), "one_liner": brief.get("idea"), "customer": brief.get("target_market"),
-                     "format": "digital toolkit", "signal_ids": [s["id"] for s in signals], "score": 0,
-                     "score_parts": {}, "is_founder_idea": True}]
+        if not opps or not opps[0].get("is_founder_idea"):
+            from agents.strategist import score_opportunity
+            sc = score_opportunity({}, len(signals))  # model rating unavailable: evidence points only, ratings at minimum
+            opps.insert(0, {"title": brief.get("idea"), "one_liner": brief.get("idea"), "customer": brief.get("target_market"),
+                            "format": "not rated (model error)", "signal_ids": [s["id"] for s in signals],
+                            "score": sc["total"], "score_parts": sc["parts"], "is_founder_idea": True,
+                            "rating_reasons": {"note": "the model returned no usable rating; scored on evidence only"}})
         md = self.header(1, "opportunities")
         md += (f"Search queries (problem): {', '.join(pq)}\n\nSearch queries (existing products): {', '.join(prodq)}\n\n"
                f"## Verified pain signals ({len(signals)})\n\nEach quote below was checked by code against the fetched text "

@@ -45,6 +45,7 @@ def test_full_pipeline_runs_all_six_phases(tmp_path, monkeypatch):
     entries = json.loads((tmp_path / "log.json").read_text())
     assert entries and not validate_entries(entries)
     assert "PASS" in (tmp_path / "out" / "phase5_step3_delivery_test.md").read_text()
+    assert "Scope Kit" in (tmp_path / "out" / "phase1_step2_scoring.md").read_text()
 
 
 def test_weak_idea_is_stopped(tmp_path, monkeypatch):
