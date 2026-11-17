@@ -151,3 +151,9 @@ def test_json_repair_handles_small_model_mistakes():
     from llm import extract_json
     assert extract_json('{"ids": [S8, S18], "id": S3}') == {"ids": ["S8", "S18"], "id": "S3"}
     assert extract_json('Sure: {"a": [1, 2,], "b": "x') == {"a": [1, 2]}  # a cut-off last field is dropped, not guessed
+
+
+def test_guardrail_evals_all_pass():
+    import subprocess
+    r = subprocess.run([sys.executable, str(ROOT / "evals" / "run_evals.py")], capture_output=True, text=True)
+    assert r.returncode == 0, r.stdout + r.stderr
