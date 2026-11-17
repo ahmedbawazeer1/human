@@ -98,6 +98,32 @@ flowchart TD
 | Launch (P5) | Paid order delivers, duplicate webhook ignored, forged webhook rejected, refund revokes access, reconciliation balances | go / stop |
 | Next (P6) | >= 10 real paying customers, refunds <= 20% | persevere (go) / repeat / pivot |
 
+### Every step ends with a check
+
+Each step ends with one of the three gate types: a **test** run by code, a **threshold** fixed in advance, or a **founder approval**. Phase gates (table above) combine them and ask the founder to accept or override.
+
+| Step | Gate type | What is checked (in code) |
+|---|---|---|
+| P1.0 Intake | test | Excluded-category screen; a hit stops the run and cannot be overridden |
+| P1.1 Find opportunities | test | Each quote must appear word for word in its fetched source and mention the founder's problem terms; others are dropped and logged |
+| P1.2 Score vs alternatives | threshold | Score computed by code; below 45 → STOP, below 60 → REPEAT; an alternative 10+ points higher → PIVOT |
+| P1.3 Define market | test | Claims without a valid source id are printed as ASSUMPTION; market size is never invented |
+| P1.4 Interviews (Mom Test) | threshold | At least 5 real interviews, 60% describing the problem from past behaviour; none supplied → counted as missing, never simulated |
+| P2.1 Lean Canvas | test | Each item cites a source id or is labelled ASSUMPTION |
+| P2.2 Landing page | test + approval | Output scanner removes promises, fake proof and urgency; publishing needs a founder approval bound to the exact HTML |
+| P2.3 Demand test | threshold | Real sign-ups vs the pre-set target (100 in 14 days); 12 of 100 → STOP; no data → REPEAT |
+| P3.1 MVP spec | test | Product name may not match an existing product found in research (renamed if it does) |
+| P3.2 Build product | test | QA: length, required phrase per section, no unsourced statistics, no placeholders, no rule-breaking text; failing sections rebuilt (max 3 attempts) |
+| P3.3 User docs | test | Docs must contain quick start, how to get help and refunds |
+| P4.1 Pricing | test + approval | Price must be a valid number within bounds (code check); founder signs off |
+| P4.2 Policies | approval | Terms, privacy and refund drafts (labelled not legal advice) need founder sign-off |
+| P5.1 Store page | test + approval | Output scanner; opening the (MOCKED) store needs founder approval |
+| P5.2 Launch posts | approval | Each post approved or rejected individually; rejected posts are never published |
+| P5.3 Sale to cash | test + approval | Paid order delivers, duplicate and forged webhooks ignored, refund (founder-approved) revokes access, books reconcile |
+| P6.1 Support | test | Output scanner; replies are drafts only, nothing is sent |
+| P6.2 Metrics | test | MOCKED test orders are excluded from every decision |
+| P6.3 Persevere-or-pivot memo | threshold | At least 10 real paying customers to persevere; the memo is written from the gate result |
+
 **When the system recommends STOP:**
 - Fewer than 2 verified pain signals, or an opportunity score below 45.
 - Real interviews contradict the desk research (less than 30% have the problem).
