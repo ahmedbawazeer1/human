@@ -2,13 +2,15 @@
 
 An open-source team of AI agents that takes a founder's brief toward a validated, sellable **digital** product, through six phases (Discover, Validate, Build, Commercial setup, Launch, Operate and learn) with a gate after every step. It cites real sources or labels claims `ASSUMPTION`, keeps the founder in control of everything that goes out, and **recommends STOP when the evidence is weak**. Runs on a local open-weight model; costs $0 per run.
 
+Pitch: [docs/pitch.md](docs/pitch.md) · Slides: [docs/slides.md](docs/slides.md) (open `docs/slides.html` to present) · Guardrail evals: [evals/results.md](evals/results.md)
+
 ## Quickstart
 
 ```bash
 docker compose up
 ```
 
-Then open **http://localhost:8000**, load an example brief (or paste your own), and click **Start run**. The first start downloads the open-weight model (`qwen3:4b`, about 2.5 GB). When a gate or an outbound action needs you, an **Approve / Reject** (or **Accept / Override**) card appears on the run page.
+Then open **http://localhost:8000** (the page loads within about a minute; the model downloads in the background on first start), load an example brief (or paste your own), and click **Start run**. The first start downloads the open-weight model (`qwen3:4b`, about 2.5 GB). When a gate or an outbound action needs you, an **Approve / Reject** (or **Accept / Override**) card appears on the run page.
 
 Command-line alternative (needs Python 3.11+ and a running Ollama):
 
@@ -49,16 +51,18 @@ pytest -q
 | Founder approval for every publish / send / spend / sign (CLI, web UI, decisions file) | **Working**, enforced in code |
 | Guardrails against trick prompts (fake reviews, urgency, impersonation, income promises, moving money) | **Working** |
 | Decision log (`decision_log.json`, one entry per agent action) | **Working** |
+| Local open-weight model (`qwen3:4b` via Ollama) or free-tier open-weight model (GPT-OSS 120B) | **Working** |
 
 ## Architecture
 
-One orchestrator (`orchestrator.py`) runs single-purpose agents (`agents/*.py`) phase by phase. After each phase a gate (`gates.py`) compares the evidence with thresholds that were written down before the evidence was collected, and recommends go, repeat, pivot or stop; the founder accepts or overrides, and both are logged. The trust-critical parts are plain code, not model output: quote verification against fetched sources, scoring arithmetic, gate rules, product tests, guardrails (`guardrails.py`), the approval check (`approval.py`, hash-bound to the exact content), and the sale-to-cash logic (`payments.py`, `webhooks.py`, `delivery.py`, `refunds.py`, `reconcile.py`). Full design with diagrams: [ARCHITECTURE.md](ARCHITECTURE.md).
+One orchestrator (`orchestrator.py`) runs single-purpose agents (`agents/*.py`) phase by phase. After each phase a gate (`gates.py`) compares the evidence with thresholds that were written down before the evidence was collected, and recommends go, repeat, pivot or stop; the founder accepts or overrides, and both are logged. The trust-critical parts are plain code, not model output: quote verification against fetched sources, scoring arithmetic, gate rules, product tests, guardrails (`guardrails.py`), the approval check (`approval.py`, hash-bound to the exact content), and the sale-to-cash logic (`payments.py`, `checkout.py`, `webhooks.py`, `delivery.py`, `refunds.py`, `reconcile.py`). Full design with diagrams: [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Models and free resources
 
 - **Default model:** `qwen3:4b` (Apache-2.0 open weights) via **Ollama**, started by `docker compose up`. No API key, no account, no paid service.
 - **Smaller / bigger laptops:** set `LLM_MODEL=qwen3:1.7b` (faster) or `LLM_MODEL=qwen3:8b` (better) in `.env`.
 - **Any OpenAI-compatible server works:** llama.cpp server, vLLM, LM Studio, or a free hosted tier serving open-weight models such as GPT-OSS 20B/120B. Set `LLM_BASE_URL`, `LLM_MODEL` and (in an untracked `.env`) `LLM_API_KEY`. Nothing requires payment.
+- **Fast free option (tested):** GPT-OSS 120B (open weights, Apache-2.0) on Groq's free tier answers in about 1-2 s instead of about a minute on a CPU. In an untracked `.env`: `LLM_BASE_URL=https://api.groq.com/openai/v1`, `LLM_MODEL=openai/gpt-oss-120b` and your own free `LLM_API_KEY`. Rate limits (HTTP 429) are handled by waiting and retrying.
 - **Research sources:** Hacker News Algolia API, Stack Exchange API, GitHub search API: free and keyless.
 - The demo run in `outputs/` used `qwen3:4b` (Q4_K_M GGUF, the same weights Ollama serves) on a 4-core CPU with no GPU.
 
@@ -68,7 +72,7 @@ One orchestrator (`orchestrator.py`) runs single-purpose agents (`agents/*.py`) 
 
 ## Demo video
 
-Recording of the prototype running: link will be added here (3 minutes at most).
+[Watch the demo (2 min 13 s, Google Drive)](https://drive.google.com/file/d/1e0o-odq9Jrbiu4K75f1EbXFXuK-s7oC6/view?usp=sharing): the web UI, a trick prompt refused, a policy STOP with the founder approval card, the weak-idea STOP, the full six-phase run's gates, the MOCKED sale-to-cash test and the decision log.
 
 ## What our system will NOT do
 
@@ -83,7 +87,7 @@ Recording of the prototype running: link will be added here (3 minutes at most).
 
 ## How the project stays alive after the hackathon
 
-- **Maintainers:** the founding team maintains `main`; contributions via pull requests with the smoke tests required to pass.
+- **Maintainers:** Ahmed Bawazeer, Fidaa Aldeen Wadaan and Ahmed Alaidaroos maintain `main`. Changes go through pull requests; CI (`.github/workflows/tests.yml`) runs the smoke tests and guardrail evals on every push.
 - **Roadmap:** real publishing connectors behind the same approval check, more evidence sources with quote verification, more product formats, resuming a run from any gate (see [ARCHITECTURE.md](ARCHITECTURE.md#roadmap)).
 - **Community:** prompts live in `prompts/` and thresholds in `config/gates.json`, so people can improve them without touching code; trick prompts in `evals/` grow with every new attack we see.
 - **Funding:** the tool stays free and open (MIT). Running cost is $0 on local models, so the project does not depend on API credits. Possible support: sponsorships, grants for open-source AI tooling, and paid help setting it up for incubators, never a paywall on core features.
