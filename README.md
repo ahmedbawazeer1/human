@@ -70,7 +70,7 @@ One orchestrator (`orchestrator.py`) runs single-purpose agents (`agents/*.py`) 
 
 ## Demo video
 
-Recording of the prototype running: link will be added here (3 minutes at most).
+[Watch the demo (2 min 13 s, Google Drive)](https://drive.google.com/file/d/1e0o-odq9Jrbiu4K75f1EbXFXuK-s7oC6/view?usp=sharing): the web UI, a trick prompt refused, a policy STOP with the founder approval card, the weak-idea STOP, the full six-phase run's gates, the MOCKED sale-to-cash test and the decision log.
 
 ## What our system will NOT do
 
