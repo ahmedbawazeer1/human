@@ -59,6 +59,7 @@ One orchestrator (`orchestrator.py`) runs single-purpose agents (`agents/*.py`) 
 - **Default model:** `qwen3:4b` (Apache-2.0 open weights) via **Ollama**, started by `docker compose up`. No API key, no account, no paid service.
 - **Smaller / bigger laptops:** set `LLM_MODEL=qwen3:1.7b` (faster) or `LLM_MODEL=qwen3:8b` (better) in `.env`.
 - **Any OpenAI-compatible server works:** llama.cpp server, vLLM, LM Studio, or a free hosted tier serving open-weight models such as GPT-OSS 20B/120B. Set `LLM_BASE_URL`, `LLM_MODEL` and (in an untracked `.env`) `LLM_API_KEY`. Nothing requires payment.
+- **Fast free API option (tested):** GPT-OSS 120B (open weights, Apache-2.0) on Groq's free tier answers in about 1-2 s instead of about a minute on a CPU. In an untracked `.env`: `LLM_BASE_URL=https://api.groq.com/openai/v1`, `LLM_MODEL=openai/gpt-oss-120b` and your own free `LLM_API_KEY`. Free-tier rate limits (HTTP 429) are handled by waiting and retrying.
 - **Research sources:** Hacker News Algolia API, Stack Exchange API, GitHub search API: free and keyless.
 - The demo run in `outputs/` used `qwen3:4b` (Q4_K_M GGUF, the same weights Ollama serves) on a 4-core CPU with no GPU.
 

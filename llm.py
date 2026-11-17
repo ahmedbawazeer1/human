@@ -67,10 +67,15 @@ class LLMClient:
         headers = {"Authorization": f"Bearer {self.api_key}"}
         start = time.time()
         last_err: Exception | None = None
-        for attempt in range(3):
+        for attempt in range(6):
             try:
                 r = httpx.post(f"{self.base_url.rstrip('/')}/chat/completions",
                                json=payload, headers=headers, timeout=self.timeout)
+                if r.status_code == 429:  # free-tier rate limit: wait as the server asks, then retry
+                    wait = float(r.headers.get("retry-after") or 10)
+                    time.sleep(min(max(wait, 2), 60))
+                    last_err = RuntimeError("rate limited (429)")
+                    continue
                 r.raise_for_status()
                 data = r.json()
                 break
