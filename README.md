@@ -11,7 +11,7 @@ Pitch (problem, user, why open beats closed, roadmap): [docs/pitch.md](docs/pitc
 docker compose up
 ```
 
-Then open **http://localhost:8000**, load an example brief (or paste your own), and click **Start run**. The first start downloads the open-weight model (`qwen3:4b`, about 2.5 GB). When a gate or an outbound action needs you, an **Approve / Reject** (or **Accept / Override**) card appears on the run page.
+Then open **http://localhost:8000** (the page loads within about a minute; the first start also downloads the model in the background), load an example brief (or paste your own), and click **Start run**. The first start downloads the open-weight model (`qwen3:4b`, about 2.5 GB). When a gate or an outbound action needs you, an **Approve / Reject** (or **Accept / Override**) card appears on the run page.
 
 Command-line alternative (needs Python 3.11+ and a running Ollama):
 
