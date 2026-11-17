@@ -2,7 +2,7 @@
 
 ## Overview
 
-Open Venture Builder is a pipeline of small, single-purpose agents run by one orchestrator (`orchestrator.py`). A founder brief goes in; the system works through six phases, and **every phase ends with a gate** that recommends **go, repeat, pivot or stop** from thresholds fixed before any evidence is collected. The founder accepts the recommendation or overrides it, and the override is recorded. Anything that would be published, sent, spent or signed needs a founder approval that is checked in code (`approval.py`) against a hash of the exact content. All model calls go to an open-weight model through an OpenAI-compatible API: local Ollama (`qwen3:4b`) by default, or GPT-OSS 120B on a free tier for speed (tested; rate limits handled with retries). Every agent action is appended to `decision_log.json`. Deterministic code, not the model, does the parts that must be trusted: quote verification, scoring arithmetic, gate decisions, product tests, guardrails, payment idempotency and reconciliation.
+Open Venture Builder is a pipeline of small, single-purpose agents run by one orchestrator (`orchestrator.py`). A founder brief goes in; the system works through six phases, and **every phase ends with a gate** that recommends **go, repeat, pivot or stop** from thresholds fixed before any evidence is collected. The founder accepts the recommendation or overrides it, and the override is recorded. Anything that would be published, sent, spent or signed needs a founder approval that is checked in code (`approval.py`) against a hash of the exact content. All model calls go to a local open-weight model (Ollama, `qwen3:4b` by default) through an OpenAI-compatible API. Every agent action is appended to `decision_log.json`. Deterministic code, not the model, does the parts that must be trusted: quote verification, scoring arithmetic, gate decisions, product tests, guardrails, payment idempotency and reconciliation.
 
 ```mermaid
 flowchart TD
@@ -76,7 +76,7 @@ flowchart TD
 
 ### Phase 5: Launch (core step: open the store, deliver automatically)
 
-- **Agent:** Launcher (`agents/launcher.py`); sale-to-cash modules `payments.py`, `checkout.py`, `webhooks.py`, `delivery.py`, `refunds.py`, `reconcile.py`.
+- **Agent:** Launcher (`agents/launcher.py`); sale-to-cash modules `payments.py`, `webhooks.py`, `delivery.py`, `refunds.py`, `reconcile.py`.
 - **Method:** store page from `templates/store.html` (checkout disabled, MOCKED label), three launch posts in the founder's voice, **each approved or rejected individually**; approved ones go to the local outbox (MOCKED). Then an end-to-end sale-to-cash test against the mock provider (see below). Gate: all payment tests pass; then the founder approves opening the (MOCKED) store with automatic delivery.
 - **Output:** `phase5_step1_store_page.html`, `phase5_step2_launch_posts.md`, `phase5_step3_delivery_test.md`, `payment_test_log.md`, `phase5_gate_launch.md`.
 
@@ -97,32 +97,6 @@ flowchart TD
 | Sign-off (P4) | Valid price, no pricing issues, founder signs price and policies | go / repeat |
 | Launch (P5) | Paid order delivers, duplicate webhook ignored, forged webhook rejected, refund revokes access, reconciliation balances | go / stop |
 | Next (P6) | >= 10 real paying customers, refunds <= 20% | persevere (go) / repeat / pivot |
-
-### Every step ends with a check
-
-Each step ends with one of the three gate types: a **test** run by code, a **threshold** fixed in advance, or a **founder approval**. Phase gates (table above) combine them and ask the founder to accept or override.
-
-| Step | Gate type | What is checked (in code) |
-|---|---|---|
-| P1.0 Intake | test | Excluded-category screen; a hit stops the run and cannot be overridden |
-| P1.1 Find opportunities | test | Each quote must appear word for word in its fetched source and mention the founder's problem terms; others are dropped and logged |
-| P1.2 Score vs alternatives | threshold | Score computed by code; below 45 → STOP, below 60 → REPEAT; an alternative 10+ points higher → PIVOT |
-| P1.3 Define market | test | Claims without a valid source id are printed as ASSUMPTION; market size is never invented |
-| P1.4 Interviews (Mom Test) | threshold | At least 5 real interviews, 60% describing the problem from past behaviour; none supplied → counted as missing, never simulated |
-| P2.1 Lean Canvas | test | Each item cites a source id or is labelled ASSUMPTION |
-| P2.2 Landing page | test + approval | Output scanner removes promises, fake proof and urgency; publishing needs a founder approval bound to the exact HTML |
-| P2.3 Demand test | threshold | Real sign-ups vs the pre-set target (100 in 14 days); 12 of 100 → STOP; no data → REPEAT |
-| P3.1 MVP spec | test | Every section gets an acceptance phrase that QA must find in the built product |
-| P3.2 Build product | test | QA: length, required phrase per section, no unsourced statistics, no placeholders, no rule-breaking text; failing sections rebuilt (max 3 attempts) |
-| P3.3 User docs | test | Docs must contain quick start, how to get help and refunds |
-| P4.1 Pricing | test + approval | Price must be a valid number within bounds (code check); founder signs off |
-| P4.2 Policies | approval | Terms, privacy and refund drafts (labelled not legal advice) need founder sign-off |
-| P5.1 Store page | test + approval | Output scanner; opening the (MOCKED) store needs founder approval |
-| P5.2 Launch posts | approval | Each post approved or rejected individually; rejected posts are never published |
-| P5.3 Sale to cash | test + approval | Paid order delivers, duplicate and forged webhooks ignored, refund (founder-approved) revokes access, books reconcile |
-| P6.1 Support | test | Output scanner; replies are drafts only, nothing is sent |
-| P6.2 Metrics | test | MOCKED test orders are excluded from every decision |
-| P6.3 Persevere-or-pivot memo | threshold | At least 10 real paying customers to persevere; the memo is written from the gate result |
 
 **When the system recommends STOP:**
 - Fewer than 2 verified pain signals, or an opportunity score below 45.
@@ -174,7 +148,6 @@ Model access is only through `llm.py`; research only through `tools/research.py`
 | Guardrails (brief screen, request screen, output scanner) | Built |
 | Founder approval (CLI, web UI, decisions file), hash-checked | Built |
 | Web UI with live run view and approve/reject buttons | Built |
-| Model access: local Ollama or free-tier open-weight model (GPT-OSS 120B), with retry on rate limits | Built |
 | Product generation (Markdown toolkit) and QA tests | Built |
 | Customer interviews | Founder-supplied only; never simulated |
 | Publishing pages/posts, opening the store | **MOCKED** (local outbox) |
