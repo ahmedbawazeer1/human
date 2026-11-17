@@ -1,0 +1,41 @@
+# One command: `docker compose up`, then open http://localhost:8000
+# Runs a local open-weight model (Ollama, qwen3:4b by default). No paid service, no API key.
+services:
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  model-pull:
+    # One-shot: downloads the model the first time (about 2.5 GB for qwen3:4b), then exits.
+    image: ollama/ollama:latest
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      - OLLAMA_HOST=ollama:11434
+    entrypoint: ["ollama", "pull", "${LLM_MODEL:-qwen3:4b}"]
+    restart: "no"
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - LLM_BASE_URL=${LLM_BASE_URL:-http://ollama:11434/v1}
+      - LLM_MODEL=${LLM_MODEL:-qwen3:4b}
+      - LLM_API_KEY=${LLM_API_KEY:-local}
+      - LLM_TIMEOUT=${LLM_TIMEOUT:-900}
+    depends_on:
+      model-pull:
+        condition: service_completed_successfully
+    volumes:
+      - ./runs:/app/runs
+
+volumes:
+  ollama:

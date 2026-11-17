@@ -1,0 +1,15 @@
+{
+  "_about": "Decisions written in advance by the founder for the recorded demo run. 'continue' = accept a GO recommendation, or override a repeat/pivot/stop recommendation and continue (recorded as an override). Anything not listed here is rejected.",
+  "gate:phase1:decision": {"choice": "continue", "reason": "Founder wants to see the full pipeline; interviews will run in parallel."},
+  "publish:landing_page": {"choice": "approve", "reason": "Copy reviewed; OK to queue (MOCKED publish)."},
+  "gate:phase2:demand": {"choice": "continue", "reason": "No real traffic yet. Founder continues to build the MVP for the demo, knowing demand is unproven."},
+  "gate:phase3:tests": {"choice": "continue", "reason": "Tests reviewed."},
+  "gate:phase4:signoff": {"choice": "continue", "reason": "Price and draft policies reviewed; policies still need a professional review before real use."},
+  "publish:post_1": {"choice": "approve", "reason": "Reviewed."},
+  "publish:post_2": {"choice": "reject", "reason": "Check this community's self-promotion rules first."},
+  "publish:post_3": {"choice": "approve", "reason": "Reviewed."},
+  "refund:test_order": {"choice": "approve", "reason": "Test refund of a MOCKED order."},
+  "gate:phase5:launch": {"choice": "continue", "reason": "Sale-to-cash tests reviewed."},
+  "publish:open_store": {"choice": "approve", "reason": "Open the MOCKED store."},
+  "gate:phase6:next": {"choice": "accept", "reason": "Agree: no real sales data yet."}
+}

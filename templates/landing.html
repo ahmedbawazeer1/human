@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$title</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:720px;margin:0 auto;padding:16px;color:#1d1d1f;line-height:1.55;background:#fff}
+  .mock{background:#fff4ce;border:1px solid #e0c060;padding:8px 12px;border-radius:6px;font-size:14px}
+  h1{font-size:2rem;margin:.6em 0 .2em} .sub{font-size:1.15rem;color:#444}
+  form{display:flex;gap:8px;flex-wrap:wrap;margin:1.2em 0} input[type=email]{flex:1;min-width:200px;padding:10px;border:1px solid #bbb;border-radius:6px}
+  button{padding:10px 16px;border:0;border-radius:6px;background:#1d4ed8;color:#fff;font-weight:600}
+  dt{font-weight:600;margin-top:.6em} small{color:#666}
+</style>
+</head>
+<body>
+<p class="mock">MOCKED: local preview of a demand-test page. It is not published anywhere until the founder approves.</p>
+<h1>$headline</h1>
+<p class="sub">$subheadline</p>
+<p><strong>This product is not built yet.</strong> Join the waitlist to hear when an early version is ready. No payment is taken.</p>
+<form method="post" action="/lp/$run_id/waitlist">
+  <input type="email" name="email" required placeholder="you@example.com" aria-label="Email">
+  <label><input type="checkbox" name="consent" value="yes" required> Email me about this product only</label>
+  <button type="submit">$cta</button>
+</form>
+<h2>What you get</h2>
+<ul>$benefits</ul>
+<h2>How it works</h2>
+<ol>$steps</ol>
+<h2>Questions</h2>
+<dl>$faq</dl>
+<p><small>We store a one-way hash of your email to count unique sign-ups. Unsubscribe any time by replying to any email.</small></p>
+</body>
+</html>

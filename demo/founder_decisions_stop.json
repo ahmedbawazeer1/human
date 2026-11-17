@@ -1,0 +1,5 @@
+{
+  "_about": "Founder decisions for the weak-idea demo run: accept whatever the system recommends.",
+  "gate:phase1:decision": {"choice": "accept", "reason": "Founder accepts the system's recommendation."},
+  "gate:phase1:policy": {"choice": "accept", "reason": "Founder accepts the system's recommendation."}
+}
