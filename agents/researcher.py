@@ -22,7 +22,10 @@ STOPWORDS = set("""about after again also another because been before being betw
 every from have help helps into just like make many more most much need only other over people really same should some such than that
 their them then there these they this those through tool tools very want what when where which while with without would your yours
 using used user users app apps mobile online digital product products simple easy best better small new get gets
-send sends ready stop stops start keep""".split())
+send sends ready stop stops start keep
+team teams remote software startup startups daily weekly short written guide example examples messages
+toolkit template templates rhythm replace focus honest honesty check process change email work works
+week time hours business businesses company companies small""".split())
 
 
 def keywords(*texts) -> set[str]:

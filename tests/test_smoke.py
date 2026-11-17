@@ -167,3 +167,14 @@ def test_product_name_never_reuses_an_existing_brand(tmp_path, monkeypatch):
     b = BuilderAgent(p.ctx)
     monkeypatch.setattr(b, "rename", lambda spec, taken: "Clear Scope Kit")
     assert p.unique_product_name(b, {"product_name": "ScopeGuard Toolkit"}) == "Clear Scope Kit"
+
+
+def test_generic_words_do_not_count_as_evidence():
+    from agents.researcher import keywords, relevance_hits
+    from tools.research import Source
+    core = keywords("A toolkit that helps remote software teams replace daily status meetings with written check-ins",
+                    "Remote software teams at startups")
+    off_topic = Source("S1", "u", "", "Not having lunch together is the biggest sign of a dysfunctional team.", "hn")
+    on_topic = Source("S2", "u", "", "Spending 5 hours per week in status meetings is objectively bad.", "hn")
+    assert not relevance_hits(off_topic, core)
+    assert relevance_hits(on_topic, core)
