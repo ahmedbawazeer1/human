@@ -192,6 +192,9 @@ class Pipeline:
                             "format": "not rated (model error)", "signal_ids": [s["id"] for s in signals],
                             "score": sc["total"], "score_parts": sc["parts"], "is_founder_idea": True,
                             "rating_reasons": {"note": "the model returned no usable rating; scored on evidence only"}})
+        B1 = BuilderAgent(self.ctx)
+        for o in opps:  # never carry a name that an existing product already uses
+            o["title"] = self.unique_product_name(B1, {"product_name": o.get("title"), "promise": o.get("one_liner")})
         md = self.header(1, "opportunities")
         md += (f"Search queries (problem): {', '.join(pq)}\n\nSearch queries (existing products): {', '.join(prodq)}\n\n"
                f"## Verified pain signals ({len(signals)})\n\nEach quote below was checked by code against the fetched text "
@@ -373,11 +376,11 @@ class Pipeline:
         taken = []
         for p in self.ctx.state.get("products", []):
             taken.append(p.title.split("/")[-1].replace("Show HN:", "").split(" – ")[0].split(" - ")[0].strip())
-        taken_n = {norm(t) for t in taken if len(norm(t)) >= 4}
+        taken_n = {norm(t) for t in taken if len(norm(t)) >= 6}  # skip generic short words like "scope"
 
         def clashes(name):
             n = norm(name)
-            return not n or any(t in n or n in t for t in taken_n)
+            return not n or any(t == n or t in n for t in taken_n)
         name = spec.get("product_name") or ""
         for _ in range(2):
             if not clashes(name):
