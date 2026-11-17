@@ -75,6 +75,8 @@ class ResearcherAgent(BaseAgent):
         max_sources = max_sources or int(os.getenv("RESEARCH_MAX_SOURCES", "24"))
         # Code-level relevance filter: a post must mention at least 2 distinct key terms of the problem.
         kws = keywords(brief.get("idea"), brief.get("target_market"), " ".join(self.ctx.state.get("queries", [])))
+        # Core terms come only from the founder's own words; the quote itself must mention one of them.
+        core = keywords(brief.get("idea"), brief.get("target_market"))
         relevant = [s for s in sources if len(relevance_hits(s, kws)) >= 2]
         self.ctx.log.append("researcher", "filter_relevant_sources", model=None, cost=0,
                             sources=[s.url for s in relevant],
@@ -99,6 +101,11 @@ class ResearcherAgent(BaseAgent):
                     continue
                 src = self.ctx.registry.get(sig.get("id", ""))
                 quote = (sig.get("quote") or "").strip().strip('"')
+                quote_terms = relevance_hits(research.Source("", "", "", quote, ""), core) if src else set()
+                if src and research.quote_in_source(quote, src) and not quote_terms:
+                    self.ctx.log.append("researcher", "drop_offtopic_quote", model=None, cost=0, sources=[src.url],
+                                        outcome="dropped", detail=f"quote does not mention the problem ({sorted(core)[:8]}): {quote[:120]}")
+                    continue
                 if src and research.quote_in_source(quote, src):
                     verified.append({"id": src.id, "url": src.url, "quote": quote, "title": src.title,
                                      "origin": src.origin, "date": src.date})
