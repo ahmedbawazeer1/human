@@ -396,5 +396,15 @@
   "approved_by": null,
   "outcome": "allowed",
   "run_id": "20261117-171828-7aa9"
+ },
+ {
+  "timestamp": "2026-11-17T17:18:43Z",
+  "agent": "researcher",
+  "action": "plan_search_queries",
+  "sources": [],
+  "model": "qwen3:4b",
+  "cost": 0.0,
+  "approved_by": null,
+  "run_id": "20261117-171828-7aa9"
  }
 ]
