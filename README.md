@@ -85,7 +85,8 @@ Recording of the prototype running: link will be added here (3 minutes at most).
 
 ## How the project stays alive after the hackathon
 
-- **Maintainers:** the founding team maintains `main`; contributions via pull requests with the smoke tests required to pass.
+- **Maintainers:** Ahmed Bawazeer, Fidaa Aldeen Wadaan and Ahmed Alaidaroos maintain `main`. Every change goes through a pull request, and CI (`.github/workflows/tests.yml`) runs the smoke tests and guardrail evals before it can be merged.
+- **Release rhythm:** small monthly releases; each release re-runs the demo briefs and commits the new `outputs/` and `decision_log.json`, so results stay reproducible.
 - **Roadmap:** real publishing connectors behind the same approval check, more evidence sources with quote verification, more product formats, resuming a run from any gate (see [ARCHITECTURE.md](ARCHITECTURE.md#roadmap)).
 - **Community:** prompts live in `prompts/` and thresholds in `config/gates.json`, so people can improve them without touching code; trick prompts in `evals/` grow with every new attack we see.
 - **Funding:** the tool stays free and open (MIT). Running cost is $0 on local models, so the project does not depend on API credits. Possible support: sponsorships, grants for open-source AI tooling, and paid help setting it up for incubators, never a paywall on core features.
