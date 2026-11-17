@@ -68,7 +68,7 @@ One orchestrator (`orchestrator.py`) runs single-purpose agents (`agents/*.py`) 
 
 ## Demo video
 
-[Watch the demo (2 min 13 s, Google Drive)](https://drive.google.com/file/d/1e0o-odq9Jrbiu4K75f1EbXFXuK-s7oC6/view?usp=sharing).
+Recording of the prototype running: link will be added here (3 minutes at most).
 
 ## What our system will NOT do
 
@@ -83,7 +83,7 @@ One orchestrator (`orchestrator.py`) runs single-purpose agents (`agents/*.py`) 
 
 ## How the project stays alive after the hackathon
 
-- **Maintainers:** Ahmed Bawazeer, Fidaa Aldeen Wadaan and Ahmed Alaidaroos maintain `main`; contributions via pull requests with the smoke tests required to pass.
+- **Maintainers:** the founding team maintains `main`; contributions via pull requests with the smoke tests required to pass.
 - **Roadmap:** real publishing connectors behind the same approval check, more evidence sources with quote verification, more product formats, resuming a run from any gate (see [ARCHITECTURE.md](ARCHITECTURE.md#roadmap)).
 - **Community:** prompts live in `prompts/` and thresholds in `config/gates.json`, so people can improve them without touching code; trick prompts in `evals/` grow with every new attack we see.
 - **Funding:** the tool stays free and open (MIT). Running cost is $0 on local models, so the project does not depend on API credits. Possible support: sponsorships, grants for open-source AI tooling, and paid help setting it up for incubators, never a paywall on core features.
