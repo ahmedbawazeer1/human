@@ -52,16 +52,18 @@ pytest -q
 | Founder approval for every publish / send / spend / sign (CLI, web UI, decisions file) | **Working**, enforced in code |
 | Guardrails against trick prompts (fake reviews, urgency, impersonation, income promises, moving money) | **Working** |
 | Decision log (`decision_log.json`, one entry per agent action) | **Working** |
+| Local open-weight model (`qwen3:4b` via Ollama) or free-tier open-weight model (GPT-OSS 120B) | **Working** |
 
 ## Architecture
 
-One orchestrator (`orchestrator.py`) runs single-purpose agents (`agents/*.py`) phase by phase. After each phase a gate (`gates.py`) compares the evidence with thresholds that were written down before the evidence was collected, and recommends go, repeat, pivot or stop; the founder accepts or overrides, and both are logged. The trust-critical parts are plain code, not model output: quote verification against fetched sources, scoring arithmetic, gate rules, product tests, guardrails (`guardrails.py`), the approval check (`approval.py`, hash-bound to the exact content), and the sale-to-cash logic (`payments.py`, `webhooks.py`, `delivery.py`, `refunds.py`, `reconcile.py`). Full design with diagrams: [ARCHITECTURE.md](ARCHITECTURE.md).
+One orchestrator (`orchestrator.py`) runs single-purpose agents (`agents/*.py`) phase by phase. After each phase a gate (`gates.py`) compares the evidence with thresholds that were written down before the evidence was collected, and recommends go, repeat, pivot or stop; the founder accepts or overrides, and both are logged. The trust-critical parts are plain code, not model output: quote verification against fetched sources, scoring arithmetic, gate rules, product tests, guardrails (`guardrails.py`), the approval check (`approval.py`, hash-bound to the exact content), and the sale-to-cash logic (`payments.py`, `checkout.py`, `webhooks.py`, `delivery.py`, `refunds.py`, `reconcile.py`). Full design with diagrams: [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Models and free resources
 
 - **Default model:** `qwen3:4b` (Apache-2.0 open weights) via **Ollama**, started by `docker compose up`. No API key, no account, no paid service.
 - **Smaller / bigger laptops:** set `LLM_MODEL=qwen3:1.7b` (faster) or `LLM_MODEL=qwen3:8b` (better) in `.env`.
 - **Any OpenAI-compatible server works:** llama.cpp server, vLLM, LM Studio, or a free hosted tier serving open-weight models such as GPT-OSS 20B/120B. Set `LLM_BASE_URL`, `LLM_MODEL` and (in an untracked `.env`) `LLM_API_KEY`. Nothing requires payment.
+- **Fast free option (tested):** GPT-OSS 120B (open weights, Apache-2.0) on Groq's free tier answers in about 1-2 s instead of about a minute on a CPU. Put these in an untracked `.env`: `LLM_BASE_URL=https://api.groq.com/openai/v1`, `LLM_MODEL=openai/gpt-oss-120b`, and your own free `LLM_API_KEY`. Free-tier rate limits are handled by waiting and retrying (HTTP 429).
 - **Research sources:** Hacker News Algolia API, Stack Exchange API, GitHub search API: free and keyless.
 - The demo run in `outputs/` used `qwen3:4b` (Q4_K_M GGUF, the same weights Ollama serves) on a 4-core CPU with no GPU.
 

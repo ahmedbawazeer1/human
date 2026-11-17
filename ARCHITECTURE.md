@@ -2,7 +2,7 @@
 
 ## Overview
 
-Open Venture Builder is a pipeline of small, single-purpose agents run by one orchestrator (`orchestrator.py`). A founder brief goes in; the system works through six phases, and **every phase ends with a gate** that recommends **go, repeat, pivot or stop** from thresholds fixed before any evidence is collected. The founder accepts the recommendation or overrides it, and the override is recorded. Anything that would be published, sent, spent or signed needs a founder approval that is checked in code (`approval.py`) against a hash of the exact content. All model calls go to a local open-weight model (Ollama, `qwen3:4b` by default) through an OpenAI-compatible API. Every agent action is appended to `decision_log.json`. Deterministic code, not the model, does the parts that must be trusted: quote verification, scoring arithmetic, gate decisions, product tests, guardrails, payment idempotency and reconciliation.
+Open Venture Builder is a pipeline of small, single-purpose agents run by one orchestrator (`orchestrator.py`). A founder brief goes in; the system works through six phases, and **every phase ends with a gate** that recommends **go, repeat, pivot or stop** from thresholds fixed before any evidence is collected. The founder accepts the recommendation or overrides it, and the override is recorded. Anything that would be published, sent, spent or signed needs a founder approval that is checked in code (`approval.py`) against a hash of the exact content. All model calls go to an open-weight model through an OpenAI-compatible API: local Ollama (`qwen3:4b`) by default, or GPT-OSS 120B on a free tier for speed (tested; rate limits handled with retries). Every agent action is appended to `decision_log.json`. Deterministic code, not the model, does the parts that must be trusted: quote verification, scoring arithmetic, gate decisions, product tests, guardrails, payment idempotency and reconciliation.
 
 ```mermaid
 flowchart TD
@@ -76,7 +76,7 @@ flowchart TD
 
 ### Phase 5: Launch (core step: open the store, deliver automatically)
 
-- **Agent:** Launcher (`agents/launcher.py`); sale-to-cash modules `payments.py`, `webhooks.py`, `delivery.py`, `refunds.py`, `reconcile.py`.
+- **Agent:** Launcher (`agents/launcher.py`); sale-to-cash modules `payments.py`, `checkout.py`, `webhooks.py`, `delivery.py`, `refunds.py`, `reconcile.py`.
 - **Method:** store page from `templates/store.html` (checkout disabled, MOCKED label), three launch posts in the founder's voice, **each approved or rejected individually**; approved ones go to the local outbox (MOCKED). Then an end-to-end sale-to-cash test against the mock provider (see below). Gate: all payment tests pass; then the founder approves opening the (MOCKED) store with automatic delivery.
 - **Output:** `phase5_step1_store_page.html`, `phase5_step2_launch_posts.md`, `phase5_step3_delivery_test.md`, `payment_test_log.md`, `phase5_gate_launch.md`.
 
@@ -174,6 +174,7 @@ Model access is only through `llm.py`; research only through `tools/research.py`
 | Guardrails (brief screen, request screen, output scanner) | Built |
 | Founder approval (CLI, web UI, decisions file), hash-checked | Built |
 | Web UI with live run view and approve/reject buttons | Built |
+| Model access: local Ollama or free-tier open-weight model (GPT-OSS 120B), with retry on rate limits | Built |
 | Product generation (Markdown toolkit) and QA tests | Built |
 | Customer interviews | Founder-supplied only; never simulated |
 | Publishing pages/posts, opening the store | **MOCKED** (local outbox) |
