@@ -1,6 +1,6 @@
 # Phase 1 (Discover): founder brief and pre-registered thresholds
 
-Run `20261117-171828-7aa9` | generated 2026-11-17T17:18:28Z | model `qwen3:4b`
+Run `20261117-200539-79c8` | generated 2026-11-17T20:05:39Z | model `qwen3:4b`
 
 ## Founder brief (as understood)
 
