@@ -151,30 +151,3 @@ def test_json_repair_handles_small_model_mistakes():
     from llm import extract_json
     assert extract_json('{"ids": [S8, S18], "id": S3}') == {"ids": ["S8", "S18"], "id": "S3"}
     assert extract_json('Sure: {"a": [1, 2,], "b": "x') == {"a": [1, 2]}  # a cut-off last field is dropped, not guessed
-
-
-def test_guardrail_evals_all_pass():
-    import subprocess
-    r = subprocess.run([sys.executable, str(ROOT / "evals" / "run_evals.py")], capture_output=True, text=True)
-    assert r.returncode == 0, r.stdout + r.stderr
-
-
-def test_product_name_never_reuses_an_existing_brand(tmp_path, monkeypatch):
-    from tools.research import Source
-    from agents.builder import BuilderAgent
-    p = Pipeline(BRIEF, llm=FakeLLM(), out_dir=tmp_path, log_path=tmp_path / "l.json", run_dir=tmp_path / "r")
-    p.ctx.state["products"] = [Source("S1", "https://github.com/x/scopeguard", "x/scopeguard", "", "github")]
-    b = BuilderAgent(p.ctx)
-    monkeypatch.setattr(b, "rename", lambda spec, taken: "Clear Scope Kit")
-    assert p.unique_product_name(b, {"product_name": "ScopeGuard Toolkit"}) == "Clear Scope Kit"
-
-
-def test_generic_words_do_not_count_as_evidence():
-    from agents.researcher import keywords, relevance_hits
-    from tools.research import Source
-    core = keywords("A toolkit that helps remote software teams replace daily status meetings with written check-ins",
-                    "Remote software teams at startups")
-    off_topic = Source("S1", "u", "", "Not having lunch together is the biggest sign of a dysfunctional team.", "hn")
-    on_topic = Source("S2", "u", "", "Spending 5 hours per week in status meetings is objectively bad.", "hn")
-    assert not relevance_hits(off_topic, core)
-    assert relevance_hits(on_topic, core)

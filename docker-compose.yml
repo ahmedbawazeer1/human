@@ -31,17 +31,9 @@ services:
       - LLM_MODEL=${LLM_MODEL:-qwen3:4b}
       - LLM_API_KEY=${LLM_API_KEY:-local}
       - LLM_TIMEOUT=${LLM_TIMEOUT:-900}
-    # The app starts right away; the home page shows whether the model is ready yet,
-    # so the UI works even while the model is still downloading.
     depends_on:
-      ollama:
-        condition: service_started
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthz')"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
+      model-pull:
+        condition: service_completed_successfully
     volumes:
       - ./runs:/app/runs
 

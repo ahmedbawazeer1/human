@@ -33,15 +33,6 @@ class BuilderAgent(BaseAgent):
         obj["sections"] = [s for s in as_list(obj.get("sections")) if isinstance(s, dict) and s.get("title")][:5]
         return obj
 
-    def rename(self, spec: dict, taken: list[str]) -> str:
-        obj = self.ask_json(
-            f"The product name \"{spec.get('product_name')}\" is already used by an existing product. "
-            f"Existing product names to avoid: {', '.join(taken[:15])}.\n"
-            f"Suggest a new, plain, descriptive product name (2-4 words) for: {spec.get('promise')}. "
-            "It must not contain any of the existing names or another company's brand.\n"
-            'JSON: {"product_name": ""}', action="rename_product_to_avoid_brand_clash", max_tokens=100)
-        return str(obj.get("product_name") or "").strip()
-
     def write_section(self, spec: dict, section: dict, feedback: str = "") -> str:
         text = self.ask_text(
             f"Product: {spec.get('product_name')} - {spec.get('promise')}\n"

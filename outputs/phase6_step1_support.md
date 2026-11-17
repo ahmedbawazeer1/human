@@ -1,41 +1,41 @@
 # Phase 6 (Operate and learn): support
 
-Run `20261117-200539-79c8` | generated 2026-11-17T20:24:28Z | model `qwen3:4b`
+Run `20261117-171828-7aa9` | generated 2026-11-17T17:36:41Z | model `qwen3:4b`
 
 Replies are drafts; the founder sends them.
 
 ## FAQ
 
-**What is the refund window for ScopeControl Toolkit?**
+**Can I return the ScopeGuard Toolkit if it doesn't meet my needs?**
 
-The refund window for ScopeControl Toolkit is 14 days from the date of purchase.
+Yes, you may return the product within 14 days of purchase for a full refund. The product must be unused and in its original packaging.
 
-**Can I get a refund if I'm not satisfied with the product?**
+**What is the refund window for the ScopeGuard Toolkit?**
 
-Refunds are available within the 14-day window after purchase. Please contact us for further details.
+The refund window is 14 days from the date of purchase. You must initiate the refund process within this period.
 
-**Is there any documentation or support provided with the ScopeControl Toolkit?**
+**How do I start the refund process for the ScopeGuard Toolkit?**
 
-The ScopeControl Toolkit includes basic documentation and support resources. For more information, please refer to the product guide.
+To start the refund process, contact customer support with your order confirmation and a description of the issue. Our team will guide you through the next steps.
 
-**How do I request a refund for the ScopeControl Toolkit?**
+**Is there a possibility of a partial refund if the product is not fully used?**
 
-To request a refund, contact our customer service team within 14 days of purchase. You will need to provide your order details and reason for the refund.
+The refund is for the full price of the product if it is unused and in its original packaging. Partial refunds are not available under the current policy.
 
-**What if I have questions about using the ScopeControl Toolkit?**
+**What if I have questions about the ScopeGuard Toolkit before purchasing?**
 
-You can reach out to our support team for assistance with using the product. They can provide guidance and answer any questions you may have.
+You can contact our support team with any questions about the product's features or benefits. Our team will provide you with accurate information based on the product description.
 
 ## Reply templates
 
 ### Download Problem
 
-Dear [Name], Thank you for your inquiry. We understand that you're having trouble downloading the ScopeControl Toolkit. Please ensure you are using a stable internet connection and try again. If the issue persists, please let us know and we will assist further.
+I received the ScopeGuard Toolkit, but I'm having trouble downloading the files. Could you please assist me?
 
 ### Refund Request
 
-Dear [Name], We appreciate your feedback. Your request for a refund is under review. Please wait while we process your order details. You will receive confirmation once your refund is processed.
+I want to request a refund for the ScopeGuard Toolkit. I've been unable to use it as intended.
 
 ### Product Question
 
-Dear [Name], Thank you for reaching out with your product question. The ScopeControl Toolkit is designed to help manage project scope during web development projects. If you have any specific questions, please feel free to ask and we will do our best to assist you.
+I have a question about the ScopeGuard Toolkit. Could you please provide more details or clarification?

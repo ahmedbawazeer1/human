@@ -1,15 +1,15 @@
 # Payment and delivery test log
 
-Run `20261117-200539-79c8` | 2026-11-17T20:23:06Z | provider: **MOCKED** (no real or sandbox payment service; test buyers only)
+Run `20261117-171828-7aa9` | 2026-11-17T17:35:29Z | provider: **MOCKED** (no real or sandbox payment service; test buyers only)
 
 | # | Step | Result |
 |---|---|---|
-| 1 | create checkout A (MOCKED) | ord_1d8b14698f |
+| 1 | create checkout A (MOCKED) | ord_f37c66fb1b |
 | 2 | payment webhook A | delivered |
 | 3 | same webhook A delivered again | ignored:duplicate_event |
 | 4 | second payment event for order A | ignored:order_already_paid |
 | 5 | forged webhook (bad signature) | rejected:bad_signature |
-| 6 | create checkout B (MOCKED) | ord_9f38b2d082 |
+| 6 | create checkout B (MOCKED) | ord_4dd4d3a665 |
 | 7 | payment webhook B | delivered |
 | 8 | refund B (founder approved, MOCKED provider) | refunded:access_revoked |
 | 9 | buyer A can download | True |
@@ -25,8 +25,8 @@ Run `20261117-200539-79c8` | 2026-11-17T20:23:06Z | provider: **MOCKED** (no rea
 
 ## Delivery emails (MOCKED, not sent)
 
-- to test-buyer-a@example.invalid: Your download link (MOCKED email): /download/_Ba6E24YVeg6OFITLvAmtw
-- to test-buyer-b@example.invalid: Your download link (MOCKED email): /download/Bz9KYMeOs-gGKa3r2dnYqw
+- to test-buyer-a@example.invalid: Your download link (MOCKED email): /download/f8FJ7f4wOPdt4As1E6hJLw
+- to test-buyer-b@example.invalid: Your download link (MOCKED email): /download/_RTz940cEnqkcJHCqQCnFA
 
 ## Checks
 

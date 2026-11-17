@@ -1,6 +1,6 @@
 # Phase 2 (Validate): gate: demand
 
-Run `20261117-200539-79c8` | generated 2026-11-17T20:15:37Z | model `qwen3:4b`
+Run `20261117-171828-7aa9` | generated 2026-11-17T17:28:56Z | model `qwen3:4b`
 
 **Recommendation: REPEAT**
 
@@ -24,5 +24,5 @@ Next step: Publish the landing page (founder approval), drive real traffic, and 
 
 ## Run cost so far
 
-- Model calls: 12, tokens: 12,989 (10,470 in / 2,519 out), model time: 598s
+- Model calls: 12, tokens: 12,917 (10,415 in / 2,502 out), model time: 615s
 - Cost: **$0.0000** (local open-weight model `qwen3:4b`)
