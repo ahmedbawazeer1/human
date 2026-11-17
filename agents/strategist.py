@@ -91,7 +91,7 @@ class StrategistAgent(BaseAgent):
             f"OPPORTUNITY: {opp.get('title')} - {opp.get('one_liner')}\nCustomer: {opp.get('customer')}\n"
             f"Founder target market: {brief.get('target_market')}\n\nPAIN SIGNALS:\n{sig_text}\n\nEXISTING PRODUCTS:\n{prod_text}\n\n"
             "Define the market. Give: icp (one paragraph: who exactly, their situation, trigger moment), segments (2-3 short "
-            "strings), competitors (from EXISTING PRODUCTS only: name, source_id, how ours differs), claims (3-6 market claims, "
+            "strings), competitors (from EXISTING PRODUCTS only: name, source_id, how ours differs), claims (3-6 claims about the MARKET or the CUSTOMERS' problem, never about our own product; "
             "each with source_ids that directly support it, or [] if it is your assumption), and size_note (how the founder "
             "could estimate market size; do NOT invent numbers).\n"
             'JSON: {"icp": "", "segments": [], "competitors": [{"name": "", "source_id": "", "difference": ""}], '

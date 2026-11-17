@@ -112,7 +112,7 @@ Each step ends with one of the three gate types: a **test** run by code, a **thr
 | P2.1 Lean Canvas | test | Each item cites a source id or is labelled ASSUMPTION |
 | P2.2 Landing page | test + approval | Output scanner removes promises, fake proof and urgency; publishing needs a founder approval bound to the exact HTML |
 | P2.3 Demand test | threshold | Real sign-ups vs the pre-set target (100 in 14 days); 12 of 100 → STOP; no data → REPEAT |
-| P3.1 MVP spec | test | Every section gets an acceptance phrase that QA must find in the built product |
+| P3.1 MVP spec | test | Product name may not match an existing product found in research (renamed if it does) |
 | P3.2 Build product | test | QA: length, required phrase per section, no unsourced statistics, no placeholders, no rule-breaking text; failing sections rebuilt (max 3 attempts) |
 | P3.3 User docs | test | Docs must contain quick start, how to get help and refunds |
 | P4.1 Pricing | test + approval | Price must be a valid number within bounds (code check); founder signs off |

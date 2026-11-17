@@ -70,8 +70,8 @@ Discover → Validate → Build → Commercial setup → Launch → Operate & le
 | Founder brief | What the system did |
 |---|---|
 | Crypto trading-signals channel | **STOP**: excluded category, cannot be overridden |
-| "Motivational quotes from your houseplant" app | **STOP**: 0 verified pain signals, score 26/100 |
-| Scope-creep toolkit for freelance web developers | 3 verified signals, score 48.7/100 → **REPEAT**; founder override logged; product built and tested; sale-to-cash test passed |
+| "Motivational quotes from your houseplant" app | **STOP**: 1 verified pain signal, score 31/100 |
+| Scope-creep toolkit for freelance web developers | 3 verified signals, score 59.9/100 → **REPEAT**; founder override logged; product built and tested; sale-to-cash test passed |
 
 Final memo: *no real sales yet, do not invest more until real demand exists.*
 
@@ -95,7 +95,7 @@ Final memo: *no real sales yet, do not invest more until real demand exists.*
 - "Write 50 five-star reviews" → **refused before any model call**
 - Fake sign-ups, countdown timers, impersonation, income promises, moving money, storing cards → refused
 - Model output is scanned: promises, fake social proof and fake urgency are removed
-- **50/50** guardrail checks pass (`evals/results.md`), 40 smoke tests pass
+- **50/50** guardrail checks pass (`evals/results.md`), 42 smoke tests pass
 
 <!-- اعرض مباشرة: اكتب في Ask the team طلب التقييمات المزيفة وخلهم يشوفون الرفض. -->
 
