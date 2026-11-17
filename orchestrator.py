@@ -19,7 +19,6 @@ from pathlib import Path
 
 import reconcile as reconcile_mod
 import webhooks
-from checkout import start_checkout
 from agents.base import RunContext, as_list, cite
 from agents.builder import BuilderAgent
 from agents.interviewer import InterviewerAgent
@@ -448,7 +447,7 @@ class Pipeline:
             self.log.append("payments", f"mock:{name}", model=None, cost=0, outcome=str(res))
             return res
 
-        a = start_checkout(prov, product, price, "test-buyer-a@example.invalid")
+        a = prov.create_checkout(product, price, "test-buyer-a@example.invalid")
         step("create checkout A (MOCKED)", a)
         body, sig = prov.complete_test_payment(a)
         r1 = step("payment webhook A", webhooks.handle(prov, ledger, body, sig, mailer))
@@ -456,7 +455,7 @@ class Pipeline:
         body2, sig2 = prov.complete_test_payment(a)
         r2b = step("second payment event for order A", webhooks.handle(prov, ledger, body2, sig2, mailer))
         r3 = step("forged webhook (bad signature)", webhooks.handle(prov, ledger, body, "bad", mailer))
-        b = start_checkout(prov, product, price, "test-buyer-b@example.invalid")
+        b = prov.create_checkout(product, price, "test-buyer-b@example.invalid")
         step("create checkout B (MOCKED)", b)
         bb, bs = prov.complete_test_payment(b)
         step("payment webhook B", webhooks.handle(prov, ledger, bb, bs, mailer))
