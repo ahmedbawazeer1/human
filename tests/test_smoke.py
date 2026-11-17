@@ -157,3 +157,13 @@ def test_guardrail_evals_all_pass():
     import subprocess
     r = subprocess.run([sys.executable, str(ROOT / "evals" / "run_evals.py")], capture_output=True, text=True)
     assert r.returncode == 0, r.stdout + r.stderr
+
+
+def test_product_name_never_reuses_an_existing_brand(tmp_path, monkeypatch):
+    from tools.research import Source
+    from agents.builder import BuilderAgent
+    p = Pipeline(BRIEF, llm=FakeLLM(), out_dir=tmp_path, log_path=tmp_path / "l.json", run_dir=tmp_path / "r")
+    p.ctx.state["products"] = [Source("S1", "https://github.com/x/scopeguard", "x/scopeguard", "", "github")]
+    b = BuilderAgent(p.ctx)
+    monkeypatch.setattr(b, "rename", lambda spec, taken: "Clear Scope Kit")
+    assert p.unique_product_name(b, {"product_name": "ScopeGuard Toolkit"}) == "Clear Scope Kit"

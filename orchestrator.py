@@ -11,6 +11,7 @@ recommendation or overrides it; overrides are logged. A policy STOP
 from __future__ import annotations
 
 import argparse
+import re
 import json
 import sys
 import uuid
@@ -321,6 +322,7 @@ class Pipeline:
         B = BuilderAgent(self.ctx)
         self.emit("Phase 3 / step 1: MVP spec")
         spec = B.spec(st["opportunity"], st.get("canvas", {}))
+        spec["product_name"] = self.unique_product_name(B, spec)
         st["spec"] = spec
         md = self.header(3, "MVP spec")
         md += (f"**Product:** {spec.get('product_name')}\n\n**Promise:** {spec.get('promise')}\n\n## Sections and acceptance tests\n\n"
@@ -363,6 +365,28 @@ class Pipeline:
         md += "\n".join(f"| {r['name']} | {'PASS' if r['passed'] else 'FAIL'} | {r.get('detail', '')} |" for r in results)
         self.write(3, 4, "qa_report", md)
         self.gate(3, "tests", result)
+
+    def unique_product_name(self, B: BuilderAgent, spec: dict) -> str:
+        """Never ship under a name an existing product already uses (no posing as another brand)."""
+        def norm(x):
+            return re.sub(r"[^a-z0-9]", "", str(x or "").lower())
+        taken = []
+        for p in self.ctx.state.get("products", []):
+            taken.append(p.title.split("/")[-1].replace("Show HN:", "").split(" – ")[0].split(" - ")[0].strip())
+        taken_n = {norm(t) for t in taken if len(norm(t)) >= 4}
+
+        def clashes(name):
+            n = norm(name)
+            return not n or any(t in n or n in t for t in taken_n)
+        name = spec.get("product_name") or ""
+        for _ in range(2):
+            if not clashes(name):
+                return name
+            self.log.append("builder", "product_name_clash", model=None, cost=0, outcome="renamed",
+                            detail=f"'{name}' matches an existing product found in research")
+            name = B.rename(spec, taken)
+        fallback = "Working title: " + " ".join(str(spec.get("promise") or "toolkit").split()[:4])
+        return name if not clashes(name) else fallback
 
     # ---- Phase 4: Commercial setup -----------------------------------------
     def phase4(self):
